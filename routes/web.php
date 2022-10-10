@@ -7,5 +7,6 @@ Route::get('/home', function () {
     return view('welcome');
 });
 Route::post('/login', [LoginController::class,'login']);
+Route::post('/logout', [LoginController::class,'logout']);
 
 
