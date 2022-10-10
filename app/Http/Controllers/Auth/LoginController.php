@@ -13,48 +13,34 @@ use App\Http\Controllers\Auth\LoginController;
 
 class LoginController extends Controller
 {
+    use AuthenticatesUsers;
 
-    public function login(Request $request) {
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = RouteServiceProvider::HOME;
 
-       
-        $user = User::where("email", "=", $request->email)->first();
-
-        if( isset($user->id) ){
-            if(Hash::check($request->password, $user->password)){
-                //creamos el token
-                //$token = $user->createToken("auth_token")->plainTextToken;
-                //si está todo ok
-                return response()->json([
-                    "status" => 200,
-                    "msg" => "¡Usuario logueado exitosamente!",
-                    //"access_token" => $token
-                ]);        
-            }else{
-                return response()->json([
-                    "status" => 404,
-                    "msg" => "La password es incorrecta",
-                ], 404);    
-            }
-
-        }else{
-            return response()->json([
-                "status" => 0,
-                "msg" => "Usuario no registrado",
-            ], 404);  
-        }
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
     }
 
-    /*
-
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+    /**
+     * @param Request $request
+     * @param mixed $user
+     * @param mixed
+     */
+    
+    public function authenticated(Request $request, $user){
+        return response()->json($user);
+    }
 
 }
 
