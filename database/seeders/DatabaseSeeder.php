@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\SolicitudCompra;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
         ]);
 
+        SolicitudCompra::factory(20)->create();
 
     }
 }
