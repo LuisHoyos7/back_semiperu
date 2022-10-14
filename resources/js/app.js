@@ -1,4 +1,6 @@
 require('./bootstrap');
+require('./portal');
+require('./dataTablesb5');
 
 import { createApp } from 'vue';
 import App from './App.vue';

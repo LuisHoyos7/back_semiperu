@@ -1,129 +1,91 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
+<body class="app app-login p-0">
+    <div class="row g-0 app-auth-wrapper">
+        <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+            <div class="d-flex flex-column align-content-end">
+                <div class="app-auth-body mx-auto">
+                    <div class="app-auth-branding mb-4">
+                        <a class="app-logo" href="/">
+                            <img style="height: 60px;" src="/logo-semi.png" alt="logo">
+                        </a>
+                    </div>
+                    <h2 class="auth-heading text-center mb-5">Iniciar sesión</h2>
+                    <div class="auth-form-container text-start">
+                        <form class="auth-form login-form" method="POST" action="{{ route('login') }}">
+                            @csrf
+                            <div class="email mb-3">
+                                <label class="sr-only" for="signin-email">Correo Electrónico</label>
+                                <input id="signin-email" name="email" type="email" class="form-control signin-email @error('email') is-invalid @enderror" placeholder="Correo Electrónico" value="{{ old('email') }}" required="required" autofocus autocomplete="email">
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <div class="password mb-3">
+                                <label class="sr-only" for="signin-password">Contraseña</label>
+                                <div class="input-group">
+                                    <input id="signin-password" name="password" type="password" class="form-control signin-password @error('password') is-invalid @enderror" placeholder="Contraseña" required="required" autocomplete="current-password">
+                                    @error('password')
+                                        <div id="validationServer04Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                    <button type="button" class="input-group-text" id="btnGroupAddon" style="cursor: pointer;"><i class="fas fa-eye"></i></button>
+                                </div>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
+                                <div class="extra mt-3 row justify-content-between">
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="RememberPassword" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="RememberPassword">
+                                            Recuérdame
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        @if (Route::has('password.request'))
+                                            <div class="forgot-password text-end">
+                                                <a href="{{ route('password.request') }}">¿Has olvidado tu contraseña?</a>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+                            <div class="text-center">
+                                <button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Iniciar sesión</button>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+
                 </div>
+
             </div>
         </div>
+        <div class="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
+            <div class="auth-background-holder">
+            </div>
+            <div class="auth-background-mask"></div>
+        </div>
+
     </div>
-</div>
+</body>
 
-{{-- <div class="container-fluid p-0">
-    <div class="row m-0">
-        <div class="col-12 p-0">
-        <div class="login-card">
-            <div>
-            <div><a class="logo" href="index.html">
-                <img class="img-fluid for-light" src="../assets/images/logo/login.png" alt="looginpage">
-                <img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt="looginpage"></a>
-            </div>
-            <div class="login-main">
-                <form class="theme-form" method="POST" action="/login">
-                @csrf
-                <div class="form-group">
-                    <label class="col-form-label">Correo Electrónico: </label>
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email','test@gmail.com') }}" required autocomplete="email" placeholder="test@gmail.com" autofocus>
+<script>
+    let btnGroupAddon = document.getElementById('btnGroupAddon');
+    let inputpassword = document.getElementById('signin-password');
 
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label class="col-form-label">Contraseña</label>
-                    <div class="form-input position-relative">
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" value="12345678" placeholder="*********">
-                    <div class="show-hide"><span class="show"></span></div>
+    btnGroupAddon.addEventListener('click', function(){
 
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                    </div>
-                </div>
-                <div class="form-group mb-0">
-                    <div class="checkbox p-0">
-                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                    <label class="text-muted" for="checkbox1">Recuérdame</label>
-                    </div>
-                    @if (Route::has('password.request'))
-                        <a class="btn btn-link" href="{{ route('password.request') }}">Olvide la contraseña?</a>
-                    @endif
-                    <div class="text-end mt-3">
-                    <button class="btn btn-primary btn-block w-100" type="submit">Ingresar</button>
-                    </div>
-                </div>
-                </form>
-            </div>
-            </div>
-        </div>
-        </div>
-    </div>
+        if(inputpassword.getAttribute('type') == 'password'){
+            inputpassword.setAttribute('type','text');
+        }else{
+            inputpassword.setAttribute('type','password');
+        }
+    });
 
-</div> --}}
+</script>
 @endsection

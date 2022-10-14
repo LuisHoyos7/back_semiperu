@@ -1,11 +1,7 @@
 <template>
-    <footer class="footer">
-        <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12 footer-copyright text-center">
-            <p class="mb-0">Copyright 2020 © Cuba theme by pixelstrap  </p>
-            </div>
-        </div>
+    <footer class="app-footer">
+        <div class="container text-center py-3">
+            <small class="copyright">FOOTER</small>
         </div>
     </footer>
 </template>

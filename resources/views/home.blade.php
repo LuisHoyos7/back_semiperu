@@ -6,5 +6,6 @@
 </div>
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/app.js') }}" defer></script>
+<script src="/plugins/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="/js/app.js"></script>
 @endpush

@@ -6,6 +6,17 @@ window._ = require('lodash');
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
+ try {
+    window.Popper = require('popper.js').default;
+    window.$ = window.jQuery = require('jquery');
+    // window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
+
+    require('bootstrap');
+    require('datatables.net');
+    require('sweetalert');
+} catch (e) {}
+
+
  window.axios = require('axios');
 
  window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

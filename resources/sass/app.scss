@@ -1,8 +1,13 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-
+//fontawesome
+@import '~@fortawesome/fontawesome-free/css/all.css';
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+// css del portal
+@import 'portal.scss';
+//importar css de datatable bootstrap 5
+@import 'dataTablesb5.scss';
