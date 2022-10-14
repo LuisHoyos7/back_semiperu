@@ -13,6 +13,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('home');
     })->name('dashboard');
+    Route::get('/dashboard', function () {
+        return view('home');
+    });
     Route::view('/{any}', 'dashboard')->where('any', '.*');
     // Route::post('/logout', [LoginController::class,'logout']);
 });
