@@ -18,15 +18,12 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, ...$guards)
     {
-       
+
 
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                if($request->whatJson()){
-                    return response()->json($request->user);
-                }
                 return redirect(RouteServiceProvider::HOME);
             }
         }

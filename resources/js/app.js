@@ -1,11 +1,13 @@
-// require('./bootstrap');
+require('./bootstrap');
 
-import { createApp } from 'vue'
-// import { VueRouter } from ''
+import { createApp } from 'vue';
+import App from './App.vue';
 
-import HolaMundo from './components/HolaMundo';
+import router from './router';
+import store from './store';
+
 createApp({
     components: {
-        HolaMundo
+        'IndexComponent': App
     }
-}).mount("#app")
+}).use(store).use(router).mount("#app")

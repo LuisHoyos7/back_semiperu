@@ -13,12 +13,29 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    public function authenticated(Request $request, $user){
-        return response()->json($user);
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = RouteServiceProvider::HOME;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
     }
 
-    public function loggedOut(Request $request){
-        return response()->json(null);
-    }
+    // public function authenticated(Request $request, $user){
+    //     return response()->json($user);
+    // }
+
+    // public function loggedOut(Request $request){
+    //     return response()->json(null);
+    // }
 }
 
