@@ -20,7 +20,7 @@ export default createStore({
     actions: {
         async logout({ dispatch }) {
             await axios.post(`${baseURL}/logout`);
-            return dispatch("getUser");
+            return {'mensaje' : 'success'};
         },
         async login({ dispatch }, credentials) {
             await axios.get(`${baseURL}/sanctum/csrf-cookie`);

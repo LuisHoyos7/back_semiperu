@@ -21,11 +21,7 @@
                     <li><a class="dropdown-item" href="#">Perfil</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
-                        <a class="dropdown-item" href="#">Cerrar Sesión</a>
-
-                        <form id="logout-form" action="#" method="POST" class="d-none">
-
-                        </form>
+                        <a class="dropdown-item" href="#" @click="logout">Cerrar Sesión</a>
                     </li>
                 </ul>
             </div>
@@ -35,7 +31,14 @@
 
 </template>
 <script>
+
 export default {
-    name : "Header"
+    name : "Header",
+    methods: {
+        async logout(){
+            await this.$store.dispatch("logout");
+            return this.$router.go(0);
+        }
+    }
 }
 </script>
