@@ -3,7 +3,7 @@
 
     <div class="app-branding">
         <a class="app-logo" href="#">
-
+            <img style="height: 50px;" class="me-2" src="/logo-semi.png" alt="logo">
         </a>
     </div>
 
