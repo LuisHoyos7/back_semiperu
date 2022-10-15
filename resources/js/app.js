@@ -1,5 +1,4 @@
 require('./bootstrap');
-require('./portal');
 require('./dataTablesb5');
 
 import { createApp } from 'vue';
@@ -13,3 +12,5 @@ createApp({
         'IndexComponent': App
     }
 }).use(store).use(router).mount("#app")
+
+require('./portal');
