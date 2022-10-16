@@ -110,7 +110,7 @@ class RoleSeeder extends Seeder
 
         $admin->name = 'Administrador';
         $admin->email = 'admin@portalsemiperu.com';
-        $admin->password = '12345';
+        $admin->password = bcrypt('12345');
 
         $admin->save();
 
@@ -121,7 +121,7 @@ class RoleSeeder extends Seeder
 
         $personal->name = 'personal 1';
         $personal->email = 'personal1@gmail.com';
-        $personal->password = '12345';
+        $personal->password = bcrypt('12345');
 
         $personal->save();
 
@@ -131,7 +131,7 @@ class RoleSeeder extends Seeder
 
         $personal->name = 'personal 2';
         $personal->email = 'personal2@gmail.com';
-        $personal->password = '12345';
+        $personal->password = bcrypt('12345');
 
         $personal->save();
 
@@ -142,7 +142,7 @@ class RoleSeeder extends Seeder
 
         $project->name = 'Jose Machaca';
         $project->email = 'jose.machaca@gmail.com';
-        $project->password = '12345';
+        $project->password = bcrypt('12345');
 
         $project->save();
 
@@ -153,7 +153,7 @@ class RoleSeeder extends Seeder
 
         $controller->name = 'Erick Soto';
         $controller->email = 'erick.soto@gmail.com';
-        $controller->password = '12345';
+        $controller->password = bcrypt('12345');
 
         $controller->save();
 
@@ -163,7 +163,7 @@ class RoleSeeder extends Seeder
 
         $manager->name = 'Francisco';
         $manager->email = 'francisco@gmail.com';
-        $manager->password = '12345';
+        $manager->password = bcrypt('12345');
 
         $manager->save();
 
@@ -174,7 +174,7 @@ class RoleSeeder extends Seeder
 
         $manager->name = 'Contadora';
         $manager->email = 'contadora@gmail.com';
-        $manager->password = '12345';
+        $manager->password = bcrypt('12345');
 
         $manager->save();
 
