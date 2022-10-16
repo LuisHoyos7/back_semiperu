@@ -25,7 +25,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // carga de la tabla users
+
+        // User::factory(10)->create();
+        $this->call(RoleSeeder::class);
+
         User::factory()->create([
             'tipoEstado_id' => 1,
             'name' => 'Admin Semiperu',
@@ -403,7 +406,10 @@ class DatabaseSeeder extends Seeder
         $model->nombre = 'Solicitud de compra 2';
         $model->formaPago = 'Transferencia';
         $model->terminoPago = '7 días';
-        $model->detalle = '[{"descripcion":"Descripción 1","und":"UND","precio":1999.99},{"descripcion":"Descripción 2","und":"UND","precio":8000.99}]';
+        $model->detalle = [
+            ['descripcion' =>'Descripcion 1','und' => 'UND','precio'=>1999.9],
+            ['descripcion' =>'Descripcion 2','und' => 'UND','precio'=>8000.99]
+        ];
         $model->datos = '[]';
         $model->save();
     }
