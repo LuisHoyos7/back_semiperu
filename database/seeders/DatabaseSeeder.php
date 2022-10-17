@@ -28,64 +28,6 @@ class DatabaseSeeder extends Seeder
 
         // User::factory(10)->create();
         $this->call(RoleSeeder::class);
-
-        User::factory()->create([
-            'tipoEstado_id' => 1,
-            'name' => 'Admin Semiperu',
-            'email' => 'test@gmail.com',
-            'password' => bcrypt('12345678'),
-            'email_verified_at' => now(),
-            'datos' => '[]',
-            'remember_token' => Str::random(10)
-        ]);
-        User::factory()->create([
-            'tipoEstado_id' => 1,
-            'name' => 'Francisco Diequez Castelo',
-            'email' => 'francisco@gruposemi.com',
-            'password' => bcrypt('12345678'),
-            'email_verified_at' => now(),
-            'datos' => '[]',
-            'remember_token' => Str::random(10)
-        ]);
-        User::factory()->create([
-            'tipoEstado_id' => 1,
-            'name' => 'Erick Soto Heredia',
-            'email' => 'erick@gruposemi.com',
-            'password' => bcrypt('12345678'),
-            'email_verified_at' => now(),
-            'datos' => '[]',
-            'remember_token' => Str::random(10)
-        ]);
-        //Project manager
-        User::factory()->create([
-            'tipoEstado_id' => 1,
-            'name' => 'Alejandro Lopez',
-            'email' => 'alejandro@gruposemi.com',
-            'password' => bcrypt('12345678'),
-            'email_verified_at' => now(),
-            'datos' => '[]',
-            'remember_token' => Str::random(10)
-        ]);
-        //Project manager
-        User::factory()->create([
-            'tipoEstado_id' => 1,
-            'name' => 'José Machaca Prada',
-            'email' => 'jose@gruposemi.com',
-            'password' => bcrypt('12345678'),
-            'email_verified_at' => now(),
-            'datos' => '[]',
-            'remember_token' => Str::random(10)
-        ]);
-        //Contador(a)
-        User::factory()->create([
-            'tipoEstado_id' => 1,
-            'name' => 'Jessica Marilu Justo Caspito',
-            'email' => 'jessica@gruposemi.com',
-            'password' => bcrypt('12345678'),
-            'email_verified_at' => now(),
-            'datos' => '[]',
-            'remember_token' => Str::random(10)
-        ]);
         
         // carga de la tabla tipo_estados
         $model = new TipoEstado();
