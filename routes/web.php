@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\HomeController;
 
-
+Route::auth();
 Route::middleware('guest')->group(function () {
     Route::get('/login',[InicioController::class,'index'])->name('login');
 });
@@ -21,6 +21,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/{view?}', [HomeController::class,'index'])->where('view', '(.*)')->name('landing');
 });
 
-Route::auth();
+
 
 
