@@ -14,10 +14,10 @@ const routes = [{
             import ( /* webpackChunkName: "index" */ '../components/partials/Index')
     },
     {
-        path: '/solicitud-orden-compra',
-        name: 'SolicituOrdenCompra',
+        path: '/solicitud-compra',
+        name: 'SolicitudCompra',
         component: () =>
-            import ( /* webpackChunkName: "index" */ '../components/solicitudes/OrdenCompra')
+            import ( /* webpackChunkName: "index" */ '../components/solicitudes/Compra')
     },
     {
         path: '/:pathMatch(.*)*',

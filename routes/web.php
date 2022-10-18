@@ -1,14 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\HomeController;
 
-Route::auth();
 Route::middleware('guest')->group(function () {
-    Route::get('/login',[InicioController::class,'index'])->name('login');
+    Route::get('/',[InicioController::class,'index'])->name('login');
 });
+Route::auth();
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('home');

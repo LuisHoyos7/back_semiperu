@@ -45,3 +45,10 @@ export default {
     },
 }
 </script>
+<style>
+    .form-control {
+        height: 2rem;
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+    }
+</style>
