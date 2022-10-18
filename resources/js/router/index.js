@@ -17,7 +17,7 @@ const routes = [{
         path: '/solicitud-orden-compra',
         name: 'SolicituOrdenCompra',
         component: () =>
-            import ( /* webpackChunkName: "index" */ '../components/OC/SolicitudOrdenCompra')
+            import ( /* webpackChunkName: "index" */ '../components/solicitudes/OrdenCompra')
     },
     {
         path: '/:pathMatch(.*)*',
