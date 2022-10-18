@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import NotFound from '../components/errors/NotFound'
 
 const routes = [{
         path: '/',
@@ -17,7 +18,12 @@ const routes = [{
         name: 'SolicituOrdenCompra',
         component: () =>
             import ( /* webpackChunkName: "index" */ '../components/OC/SolicitudOrdenCompra')
-    }
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: NotFound
+    },
 ]
 
 const router = createRouter({

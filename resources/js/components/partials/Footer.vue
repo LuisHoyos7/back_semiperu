@@ -1,7 +1,7 @@
 <template>
     <footer class="app-footer">
         <div class="container text-center py-3">
-            <small class="copyright">FOOTER</small>
+            <small class="copyright">SEMIPERU © 2022</small>
         </div>
     </footer>
 </template>

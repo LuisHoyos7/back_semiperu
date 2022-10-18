@@ -10,6 +10,7 @@
                 <div id="sidepanel-drop" class="sidepanel-drop"></div>
                 <div class="sidepanel-inner d-flex flex-column">
                     <Sidebar></Sidebar>
+                    <SidebarFooter></SidebarFooter>
                 </div>
             </div>
         </header>
@@ -30,12 +31,14 @@
 import Header from './components/partials/Header';
 import Sidebar from './components/partials/Sidebar';
 import Footer from './components/partials//Footer';
+import SidebarFooter from './components/partials/SidebarFooter';
 
 export default {
     components: {
         Header,
         Sidebar,
-        Footer
+        Footer,
+        SidebarFooter
     },
     setup() {
 
