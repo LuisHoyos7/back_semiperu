@@ -25,12 +25,11 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Cliente:</label>
-                                    <select class="form-control form-control-sm" id="cboClienteForm" name="cboClienteForm">
-                                        <option value="" selected disabled>[ SELECCIONE ]</option>
+                                    <select v-model="form.client" class="form-control form-control-sm" id="cboClienteForm">
+                                        <option v-for="client in clients"  :key="client.id"></option>
                                     </select>
                                 </div>
                             </div>
-
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Proyecto: </label>
@@ -134,7 +133,7 @@ export default {
         return {
             clients : [],
             form:{
-
+                client: null,
             }
         }
     },
@@ -158,8 +157,8 @@ export default {
     mounted(){
         axios
             .get("api/client")
-            .then((response) => {
-                console.log(response)
+            .then((res) => {
+                this.clients = res.data
         })
     }
 }
