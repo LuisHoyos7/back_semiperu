@@ -13,3 +13,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::get('client', [ClientController::class])
 Route::apiResource('client', ClientController::class);
 
+

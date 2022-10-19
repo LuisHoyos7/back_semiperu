@@ -17,7 +17,8 @@ Route::middleware('auth')->group(function () {
     // });
     // Route::view('/{any}', 'dashboard')->where('any', '.*');
 
-    Route::get('/{view?}', [HomeController::class,'index'])->where('view', '(.*)')->name('landing');
+    Route::get('{path}', [HomeController::class, 'index'])->where('/path','([A-z\d-\/_.]+)?')
+    ->name('landing');
 });
 
 

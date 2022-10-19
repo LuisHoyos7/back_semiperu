@@ -157,7 +157,7 @@ export default {
     },
     mounted(){
         axios
-            .get(`/api/client`)
+            .get("api/client")
             .then((response) => {
                 console.log(response)
         })
