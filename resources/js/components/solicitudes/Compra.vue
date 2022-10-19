@@ -16,12 +16,12 @@
                 <div class="card-body">
                     <form>
                         <div class="row">
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="form-group">
                                     <label>RQ:</label>
                                     <input type="text" class="form-control form-control-sm" id="nroForm" name="nroForm">
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Cliente:</label>
@@ -30,14 +30,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Cliente:</label>
-                                    <select class="form-control form-control-sm" id="cboClienteForm" name="cboClienteForm">
-                                        <option value="" selected disabled>[ SELECCIONE ]</option>
-                                    </select>
-                                </div>
-                            </div>
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Proyecto: </label>
@@ -46,17 +39,17 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Nombre Proyecto: </label>
                                     <input type="text" class="form-control form-control-sm" id="nombreProyectoForm" name="nombreProyectoForm" disabled>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="row mt-1">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Area: </label>
+                                    <label>Sub Obra: </label>
                                     <select class="form-control form-control-sm" id="nombreProyectoForm" name="nombreProyectoForm">
                                         <option value="" selected disabled>[ SELECCIONE ]</option>
                                     </select>
@@ -89,12 +82,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Fecha solicitud: </label>
                                     <input type="date" class="form-control form-control-sm" name="fechaSolicitudForm" id="fechaSolicitudForm">
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="row mt-2">
                             <div class="col-12 app-card app-card-orders-table shadow-sm mb-5 mt-3">
@@ -103,8 +96,8 @@
                                         <table class="table app-table-hover text-center">
                                             <thead>
                                                 <tr>
-                                                    <th class="cell">SubObra</th>
-                                                    <th class="cell">Site</th>
+                                                    <!-- <th class="cell">SubObra</th>
+                                                    <th class="cell">Site</th> -->
                                                     <th class="cell">Descripción</th>
                                                     <th class="cell">Unidad</th>
                                                     <th class="cell">Cantidad</th>
@@ -114,10 +107,6 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td class="cell">-</td>
-                                                    <td class="cell">
-                                                        <input type="text" class="form-control form-control-sm" value="ESCRIBIR ...">
-                                                    </td>
                                                     <td class="cell">DESCRIPCION 1</td>
                                                     <td class="cell">UND</td>
                                                     <td class="cell">1</td>
@@ -138,8 +127,41 @@
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+    data(){
+        return {
+            clients : [],
+            form:{
+
+            }
+        }
+    },
+    methods : {
+         getDataDebtor() {
+            axios
+                .get(`/api/debtor`)
+                .then((resp) => {
+                    this.debtor = resp.data;
+                    this.debtor_name = `${this.debtor.name} ${this.debtor.lastname}`;
+                })
+                .catch((err) => {
+                    Swal.fire(
+                        "Contactar al administrador!",
+                        "Algo salio mal al obener al deudor!",
+                        "error"
+                    );
+                });
+        },
+    },
+    mounted(){
+        axios
+            .get(`/api/client`)
+            .then((response) => {
+                console.log(response)
+        })
+    }
 }
 </script>
 <style>

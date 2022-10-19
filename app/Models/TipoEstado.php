@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class TipoEstado extends Model
 {
     use HasFactory;
+
+    Protected $table="clients";
+
+    protected $fillable = [
+        'id',
+        'code',
+        'name', 
+        'type',   
+    ];
 }

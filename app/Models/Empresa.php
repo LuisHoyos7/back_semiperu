@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Empresa extends Model
 {
     use HasFactory;
+
+    Protected $table= "empresas";
+
+    protected $fillable = [
+        'id',
+        'tipoDocumento_id',
+        'tipoEstado_id', 
+        'cod',
+        'nombre',
+        'gerencias',  
+        'areas',
+        'sedes',
+        'datos',
+    ];
 }
