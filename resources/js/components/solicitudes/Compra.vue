@@ -1,4 +1,119 @@
 <template>
+  <v-app>
+    <div class="ma-4">
+      <v-stepper
+        v-model="step"
+        alt-labels
+        non-linear
+      >
+        <v-stepper-header>
+          <v-stepper-step
+            complete
+            editable
+            step="1"
+          >
+            Step 1
+          </v-stepper-step>
+
+          <v-divider></v-divider>
+
+          <v-stepper-step
+            editable
+            step="2"
+          >
+            Step 2
+          </v-stepper-step>
+
+          <v-divider></v-divider>
+
+          <v-stepper-step
+            step="3"
+            complete
+          >
+            Step 3
+          </v-stepper-step>
+
+          <v-divider></v-divider>
+
+          <v-stepper-step
+            step="4"
+            complete
+            editable
+          >
+            Step 4
+          </v-stepper-step>
+        </v-stepper-header>
+
+        <v-stepper-items>
+          <v-stepper-content step="1">
+            <v-card
+              class="mb-12 pa-4"
+              color="text-h2 text-center"
+              height="200px"
+            >
+              <div>Step 1</div>
+            </v-card>
+
+            <v-btn
+              color="primary"
+              @click="step = 2"
+            >
+              Continue
+            </v-btn>
+
+            <v-btn text> Cancel </v-btn>
+          </v-stepper-content>
+
+          <v-stepper-content step="2">
+            <v-card
+              class="mb-12 pa-4"
+              color="text-h2 text-center"
+              height="200px"
+            >
+              <div>Step 2</div>
+            </v-card>
+
+            <v-btn
+              color="primary"
+              @click="step = 3"
+            >
+              Continue
+            </v-btn>
+
+            <v-btn text> Cancel </v-btn>
+          </v-stepper-content>
+
+          <v-stepper-content step="3">
+            <v-card
+              class="mb-12 pa-4"
+              color="text-h2 text-center"
+              height="200px"
+            >
+              <div>Step 3</div>
+            </v-card>
+
+            <v-btn color="primary"> Continue </v-btn>
+
+            <v-btn text> Cancel </v-btn>
+          </v-stepper-content>
+
+          <v-stepper-content step="4">
+            <v-card
+              class="mb-12 pa-4"
+              color="text-h2 text-center"
+              height="200px"
+            >
+              <div>Step 4</div>
+            </v-card>
+
+            <v-btn color="primary"> Continue </v-btn>
+
+            <v-btn text> Cancel </v-btn>
+          </v-stepper-content>
+        </v-stepper-items>
+      </v-stepper>
+    </div>
+  </v-app>
     <div class="row g-3 mb-4 align-items-center justify-content-between">
         <div class="col-auto">
             <div>Solicitud de Compra</div>
@@ -56,9 +171,9 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Proveedor: </label>
-                                    <select class="form-control form-control-sm" name="proveedorForm" id="proveedorForm">
-                                        <option value="" selected disabled>[ SELECCIONE ]</option>
+                                    <label>Proveedor:</label>
+                                    <select  name="direccion1"  class="form-control form-select" v-model="form.proveedor">
+                                        <option  v-for="item in clients" :key="item.id" :value="item.id">{{ item.nombre }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -66,7 +181,6 @@
                                 <div class="form-group">
                                     <label>Moneda: </label>
                                     <select class="form-control form-control-sm" name="monedaForm" id="monedaForm">
-                                        <option value="" selected disabled>[ SELECCIONE ]</option>
                                         <option value="PEN">SOLES</option>
                                         <option value="USD">DOLARES</option>
                                         <option value="EUR">EUROS</option>
@@ -75,9 +189,9 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Solicitante: </label>
-                                    <select name="solicitanteForm" id="solicitanteForm" class="form-control form-control-sm">
-                                        <option value="" selected disabled>[ SELECCIONE ]</option>
+                                    <label>Solicitante:</label>
+                                    <select   name="direccion1"  class="form-control form-select" v-model="form.user">
+                                        <option  v-for="item in users" :key="item.id" :value="item.id">{{ item.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -131,13 +245,17 @@ import axios from 'axios';
 export default {
     data(){
         return {
+            step : 1,
             clients  :  [],
             projects :  [],
             subObras :  [],
+            users    :  [],
             form:{
                 client: null,
                 subObra:null,
                 project:null,
+                proveedor: null,
+                user : null,
             },
         }
     },
@@ -167,7 +285,9 @@ export default {
             .get("api/client")
             .then((res) => {
                 this.clients = res.data.empresa
-                console.log(this.clients);
+                this.users = res.data.user
+                console.log('clientes',this.clients);
+                console.log('users',this.users);
         })
     }
 }

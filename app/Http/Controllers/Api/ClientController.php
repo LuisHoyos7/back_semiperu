@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Empresa;
+use App\Models\User;
 
 class ClientController extends Controller
 {
@@ -13,7 +14,12 @@ class ClientController extends Controller
     public function index()
     {
         $empresa  = Empresa::get();
-        return response()->json(['empresa'=>$empresa]);
+        $user = User::role('Project')->get();
+
+            return response()->json([
+                'empresa'=>$empresa,
+                'user'   =>$user,
+            ]);
     }
 
     /**
@@ -37,7 +43,12 @@ class ClientController extends Controller
     public function show($id)
     {
         $empresa  = Empresa::get();
-        return response()->json(['empresa'=>$empresa]);
+        $user = User::role('Project')->get();
+
+            return response()->json([
+                'empresa'=>$empresa,
+                'user'   =>$user,
+            ]);
     }
 
     /**
