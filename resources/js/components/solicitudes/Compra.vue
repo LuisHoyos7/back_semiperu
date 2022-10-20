@@ -25,16 +25,16 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Cliente:</label>
-                                    <select v-model="form.client" class="form-control form-control-sm" id="cboClienteForm">
-                                        <option v-for="client in clients"  :key="client.id"></option>
+                                    <select   @change="getProject" name="direccion1"  class="form-control form-select" v-model="form.client">
+                                        <option  v-for="item in clients" :key="item.id" :value="item.id">{{ item.nombre }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Proyecto: </label>
-                                    <select class="form-control form-control-sm" id="cboProyectoForm" name="cboProyectoForm">
-                                        <option value="" selected disabled>[ SELECCIONE ]</option>
+                                    <label>Proyecto:</label>
+                                    <select  @change="getSubObra"  name="direccion1"  class="form-control form-select" v-model="form.project">
+                                        <option v-for="item in projects" :key="item.id" :value="item.id">{{ item.nombre }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -46,11 +46,11 @@
                             </div> -->
                         </div>
                         <div class="row mt-1">
-                            <div class="col-md-3">
+                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Sub Obra: </label>
-                                    <select class="form-control form-control-sm" id="nombreProyectoForm" name="nombreProyectoForm">
-                                        <option value="" selected disabled>[ SELECCIONE ]</option>
+                                    <label>Sub Obra:</label>
+                                    <select  name="direccion1"  class="form-control form-select" v-model="form.subObra">
+                                        <option v-for="item in subObras" :key="item.id" :value="item.id">{{ item.nombre }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -131,34 +131,43 @@ import axios from 'axios';
 export default {
     data(){
         return {
-            clients : [],
+            clients  :  [],
+            projects :  [],
+            subObras :  [],
             form:{
                 client: null,
-            }
+                subObra:null,
+                project:null,
+            },
         }
     },
     methods : {
-         getDataDebtor() {
+         getProject() {
+            var id = this.form.client
             axios
-                .get(`/api/debtor`)
-                .then((resp) => {
-                    this.debtor = resp.data;
-                    this.debtor_name = `${this.debtor.name} ${this.debtor.lastname}`;
+                .get(`api/project/${id}`)
+                .then((res) => {
+                    this.projects = res.data;
+                    console.log('projects', this.projects)
                 })
-                .catch((err) => {
-                    Swal.fire(
-                        "Contactar al administrador!",
-                        "Algo salio mal al obener al deudor!",
-                        "error"
-                    );
-                });
+        },
+
+        getSubObra(){
+            var id = this.form.project
+            axios
+                .get(`api/sub_obras/${id}`)
+                .then((res) => {
+                    this.subObras = res.data;
+                    console.log('sub_obras', this.projects)
+                })
         },
     },
     mounted(){
         axios
             .get("api/client")
             .then((res) => {
-                this.clients = res.data
+                this.clients = res.data.empresa
+                console.log(this.clients);
         })
     }
 }

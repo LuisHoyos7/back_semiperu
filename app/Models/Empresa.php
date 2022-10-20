@@ -22,4 +22,8 @@ class Empresa extends Model
         'sedes',
         'datos',
     ];
+
+    public function project(){
+        return $this->hasOne(Proyecto::class, 'cliente_id', 'id');
+    }
 }
