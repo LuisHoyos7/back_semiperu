@@ -12,7 +12,6 @@ class Empresa extends Model
     Protected $table= "empresas";
 
     protected $fillable = [
-        'id',
         'tipoDocumento_id',
         'tipoEstado_id', 
         'cod',

@@ -8,6 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class SolicitudCompra extends Model
 {
     use HasFactory;
-    // protected $dates = ['fecha_pago'];
+    
+    Protected $table= "solicitud_compras";
+
+    protected $fillable = [
+        'subObra_id',
+        'provvedor_id',
+        'encargado_id', 
+        'tipoMoneda_id',
+        'tipoEstado_id',
+        'cod',  
+        'nombre',
+        'formaPago',
+        'terminoPago',
+        'detalle',
+        'datos',
+    ];
+    
     protected $casts = ['detalle' => 'array'];
 }

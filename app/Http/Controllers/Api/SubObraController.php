@@ -15,7 +15,7 @@ class SubObraController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Empresa;
 use App\Models\User;
+use App\Http\Resources\ClientResource;
 
 class ClientController extends Controller
 {
@@ -30,8 +31,8 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $empresa  = Empresa::get();
-        return response()->json(['empresa'=>$empresa]);
+        return new ClientResource(Empresa::create($request->all()));
+
     }
 
     /**
@@ -40,15 +41,9 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Empresa $empresa)
     {
-        $empresa  = Empresa::get();
-        $user = User::role('Project')->get();
-
-            return response()->json([
-                'empresa'=>$empresa,
-                'user'   =>$user,
-            ]);
+        return new ClientResource($empresa);
     }
 
     /**
@@ -58,10 +53,11 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Empresa $empresa)
     {
-        $empresa  = Empresa::get();
-        return response()->json(['empresa'=>$empresa]);
+        $empresa->update($request->all());
+
+        return new ClientResource($empresa);
     }
 
     /**
@@ -70,9 +66,10 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Empresa $empresa)
     {
-        $empresa  = Empresa::get();
-        return response()->json(['empresa'=>$empresa]);
+        $empresa->delete();
+
+        return new ClientResource($empresa);
     }
 }

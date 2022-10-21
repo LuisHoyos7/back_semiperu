@@ -1,10 +1,16 @@
 require('./bootstrap');
 require('./dataTablesb5');
 
+import 'vuetify/styles' 
 import { createApp } from 'vue';
-import Vuetify from 'vuetify'
-
-// Vue.use(Vuetify)
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+const vuetify = createVuetify({
+    components,
+    directives,
+    ssr: true,
+  })
 
 import 'vuetify/dist/vuetify.min.css' 
 import App from './App.vue';
@@ -23,6 +29,6 @@ import store from './store';
 const app = createApp(App)
 app.use(router)
 app.use(store)
-app.use(Vuetify)
+app.use(vuetify)
 app.mount('#app')
 require('./portal');

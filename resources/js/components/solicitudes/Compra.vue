@@ -1,119 +1,5 @@
 <template>
-  <v-app>
-    <div class="ma-4">
-      <v-stepper
-        v-model="step"
-        alt-labels
-        non-linear
-      >
-        <v-stepper-header>
-          <v-stepper-step
-            complete
-            editable
-            step="1"
-          >
-            Step 1
-          </v-stepper-step>
 
-          <v-divider></v-divider>
-
-          <v-stepper-step
-            editable
-            step="2"
-          >
-            Step 2
-          </v-stepper-step>
-
-          <v-divider></v-divider>
-
-          <v-stepper-step
-            step="3"
-            complete
-          >
-            Step 3
-          </v-stepper-step>
-
-          <v-divider></v-divider>
-
-          <v-stepper-step
-            step="4"
-            complete
-            editable
-          >
-            Step 4
-          </v-stepper-step>
-        </v-stepper-header>
-
-        <v-stepper-items>
-          <v-stepper-content step="1">
-            <v-card
-              class="mb-12 pa-4"
-              color="text-h2 text-center"
-              height="200px"
-            >
-              <div>Step 1</div>
-            </v-card>
-
-            <v-btn
-              color="primary"
-              @click="step = 2"
-            >
-              Continue
-            </v-btn>
-
-            <v-btn text> Cancel </v-btn>
-          </v-stepper-content>
-
-          <v-stepper-content step="2">
-            <v-card
-              class="mb-12 pa-4"
-              color="text-h2 text-center"
-              height="200px"
-            >
-              <div>Step 2</div>
-            </v-card>
-
-            <v-btn
-              color="primary"
-              @click="step = 3"
-            >
-              Continue
-            </v-btn>
-
-            <v-btn text> Cancel </v-btn>
-          </v-stepper-content>
-
-          <v-stepper-content step="3">
-            <v-card
-              class="mb-12 pa-4"
-              color="text-h2 text-center"
-              height="200px"
-            >
-              <div>Step 3</div>
-            </v-card>
-
-            <v-btn color="primary"> Continue </v-btn>
-
-            <v-btn text> Cancel </v-btn>
-          </v-stepper-content>
-
-          <v-stepper-content step="4">
-            <v-card
-              class="mb-12 pa-4"
-              color="text-h2 text-center"
-              height="200px"
-            >
-              <div>Step 4</div>
-            </v-card>
-
-            <v-btn color="primary"> Continue </v-btn>
-
-            <v-btn text> Cancel </v-btn>
-          </v-stepper-content>
-        </v-stepper-items>
-      </v-stepper>
-    </div>
-  </v-app>
     <div class="row g-3 mb-4 align-items-center justify-content-between">
         <div class="col-auto">
             <div>Solicitud de Compra</div>
@@ -265,8 +151,8 @@ export default {
             axios
                 .get(`api/project/${id}`)
                 .then((res) => {
-                    this.projects = res.data;
-                    console.log('projects', this.projects)
+                     this.projects = res.data;
+                    console.log('projects', res.data)
                 })
         },
 
