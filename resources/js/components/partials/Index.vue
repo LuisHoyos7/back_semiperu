@@ -1,5 +1,5 @@
 <template>
-     <div>INICIO DE LA PLATAFORMA</div>
+     <div>{{ message }}</div>
 </template>
 <script>
 export default {

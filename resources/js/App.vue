@@ -28,7 +28,10 @@
 </template>
 
 <script>
-import Header from './components/partials/Header';
+import {defineAsyncComponent} from "vue";
+
+const Header = defineAsyncComponent(()=> import("./components/partials/Header"));
+// import Header from './components/partials/Header';
 import Sidebar from './components/partials/Sidebar';
 import Footer from './components/partials//Footer';
 import SidebarFooter from './components/partials/SidebarFooter';
@@ -40,9 +43,11 @@ export default {
         Footer,
         SidebarFooter
     },
-    setup() {
-
-    },
+    data: ()=>{
+        return {
+            user: null
+        }
+    }
 }
 </script>
 <style>

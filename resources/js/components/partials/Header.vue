@@ -11,7 +11,7 @@
         <div class="app-utilities col-auto">
             <div class="app-utility-item">
                 <label class="form-label">
-                    <span class="d-none d-xl-block">JOSE MIGUEL TENORIO CARTAGENA</span>
+                    <span class="d-none d-xl-block">{{ getUser.name }}</span>
                 </label>
             </div>
 
@@ -33,13 +33,20 @@
 
 </template>
 <script>
-
 export default {
     name : "Header",
+    props: [
+        "username"
+    ],
     methods: {
         async logout(){
             await this.$store.dispatch("logout");
             return this.$router.go(0);
+        }
+    },
+    computed: {
+        getUser() {
+            return this.$store.state.user;
         }
     }
 }
