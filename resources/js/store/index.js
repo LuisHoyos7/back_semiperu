@@ -27,7 +27,12 @@ export default createStore({
                 commit("SET_USER", null);
                 console.log("cerrada sesion");
             });
-        }
+        },
+        async logout({ dispatch }) {
+            await axios.post(`${baseURL}/logout`);
+            return dispatch("getUser");
+        },
+
     },
     modules: {}
 })
