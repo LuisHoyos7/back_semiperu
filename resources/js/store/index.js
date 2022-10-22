@@ -18,24 +18,15 @@ export default createStore({
         }
     },
     actions: {
-        async logout({ dispatch }) {
-            await axios.post(`${baseURL}/logout`);
-            return {'mensaje' : 'success'};
-        },
-        async login({ dispatch }, credentials) {
-            await axios.get(`${baseURL}/sanctum/csrf-cookie`);
-            await axios.post(`${baseURL}/login`, credentials);
-            return dispatch("getUser");
-        },
         getUser({ commit }) {
             axios.get(`${baseURL}/api/user`)
-                .then(res => {
-                    commit("SET_USER", res.data);
-                    console.log(res.data);
-                }).catch(() => {
-                    commit("SET_USER", null);
-                    console.log("cerrada sesion");
-                });
+            .then(res => {
+                commit("SET_USER", res.data);
+                console.log(res.data);
+            }).catch(() => {
+                commit("SET_USER", null);
+                console.log("cerrada sesion");
+            });
         }
     },
     modules: {}
