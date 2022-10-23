@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Empresa extends Model
 {
     use HasFactory;
+    protected $casts = ['gerencias' => 'array','areas' => 'array','sedes' => 'array','datos' => 'array'];
 }

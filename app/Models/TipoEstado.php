@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TipoEstado extends Model
 {
     use HasFactory;
+    protected $casts = ['datos' => 'array'];
 }
