@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lote extends Model
+class TipoComprobante extends Model
 {
     use HasFactory;
-    protected $casts = ['detalle' => 'array','firmas' => 'array','datos' => 'array'];
+    protected $casts = ['datos' => 'array'];
 }
