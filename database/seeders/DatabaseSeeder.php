@@ -414,7 +414,7 @@ class DatabaseSeeder extends Seeder
             ['descripcion'=>'Descripcion 2','precio'=>3999.99,'cantidad'=>1]
         ];
         $model->firmas = [
-            ['user_id'=>5,'accion'=>'A','comentario'=>'O.K.','fecha'=>'2022-10-23 12:00:00']
+            ['user_id'=>6,'accion'=>'A','comentario'=>'O.K.','fecha'=>'2022-10-23 12:00:00']
         ];//ACCION A = APROBADO, O = OBSERVADO, R = RECHAZADO, V = VISTO // EL user_id será del usuario GERENTE DE TELECOMUNICACIONES (Erick)
         $model->archivos = [
             ['tipoEstado_id'=>1,'src'=>'../documentos/2022/NOVIEMBRE/orden_compra/906.0520.60409.22/906.0520.60409.22.pdf']
@@ -430,7 +430,7 @@ class DatabaseSeeder extends Seeder
             ['subObra_id'=>3,'unidadMedida_id'=>1,'Servicios PEXT_S412772-S412773 || FIBERLUX (Huasao)'=>'Descripcion 1','precio'=>9999.99]
         ];
         $model->firmas = [
-            ['user_id'=>5,'accion'=>'A','comentario'=>'O.K.','fecha'=>'2022-10-23 14:00:00']
+            ['user_id'=>6,'accion'=>'A','comentario'=>'O.K.','fecha'=>'2022-10-23 14:00:00']
         ];
         $model->archivos = [
             ['tipoEstado_id'=>1,'src'=>'../documentos/2022/NOVIEMBRE/orden_compra/906.0620.60409.22/906.0620.60409.22.pdf']
