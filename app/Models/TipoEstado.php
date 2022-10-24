@@ -9,7 +9,7 @@ class TipoEstado extends Model
 {
     use HasFactory;
 
-    Protected $table="clients";
+    // Protected $table="clients";
 
     protected $fillable = [
         'id',
