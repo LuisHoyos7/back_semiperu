@@ -20,6 +20,7 @@ class CreateOrdenComprasTable extends Migration
             $table->string('cod');
             $table->string('nombre');
             $table->json('detalle')->nullable();
+            $table->json('firmas')->nullable();
             $table->json('archivos')->nullable();
             $table->json('datos')->nullable();
             $table->timestamps();

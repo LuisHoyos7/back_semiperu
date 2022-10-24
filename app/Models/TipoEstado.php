@@ -14,7 +14,8 @@ class TipoEstado extends Model
     protected $fillable = [
         'id',
         'code',
-        'name', 
-        'type',   
+        'name',
+        'type',
     ];
+    protected $casts = ['datos' => 'array'];
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLotesTable extends Migration
+class CreateUnidadMedidasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateLotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('lotes', function (Blueprint $table) {
+        Schema::create('unidad_medidas', function (Blueprint $table) {
             $table->id();
             $table->integer('tipoEstado_id');
             $table->string('cod');
             $table->string('nombre');
-            $table->json('detalle')->nullable();
-            $table->json('firmas')->nullable();
+            $table->string('simbolo');
             $table->json('datos')->nullable();
             $table->timestamps();
         });
@@ -32,6 +31,6 @@ class CreateLotesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lotes');
+        Schema::dropIfExists('unidad_medidas');
     }
 }

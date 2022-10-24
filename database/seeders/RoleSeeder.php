@@ -146,6 +146,14 @@ class RoleSeeder extends Seeder
 
         $project->save();
 
+        $project = new User();
+
+        $project->name = 'Alejandro Lopez';
+        $project->email = 'alejandro.lopez@gmail.com';
+        $project->password = bcrypt('12345');
+
+        $project->save();
+
         $project->assignRole($ProjectRole);
 
 

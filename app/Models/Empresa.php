@@ -14,12 +14,13 @@ class Empresa extends Model
     protected $fillable = [
         'id',
         'tipoDocumento_id',
-        'tipoEstado_id', 
+        'tipoEstado_id',
         'cod',
         'nombre',
-        'gerencias',  
+        'gerencias',
         'areas',
         'sedes',
         'datos',
     ];
+    protected $casts = ['gerencias' => 'array','areas' => 'array','sedes' => 'array','datos' => 'array'];
 }

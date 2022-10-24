@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Lote extends Model
 {
     use HasFactory;
+    protected $casts = ['detalle' => 'array','firmas' => 'array','datos' => 'array'];
 }
