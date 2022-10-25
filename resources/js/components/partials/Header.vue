@@ -33,6 +33,8 @@
 
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
     name : "Header",
     props: [
@@ -50,6 +52,9 @@ export default {
         }
     },
     computed: {
+        // ...mapGetters('getUser', {
+        //     user: 'getUser'
+        // }),
         getUser() {
             console.log("JORGE USER XD");
             return this.$store.state.user;
