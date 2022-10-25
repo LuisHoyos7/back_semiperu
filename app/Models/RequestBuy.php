@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Area extends Model
+class RequestBuy extends Model
 {
     use HasFactory;
-    protected $casts = ['data' => 'array'];
+    protected $casts = ['detail' => 'array','data' => 'array'];
 }
