@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[408],{1408:(e,t,c)=>{c.r(t),c.d(t,{default:()=>s});var n=c(821),o={class:"app-footer"},r=[(0,n.createElementVNode)("div",{class:"container text-center py-3"},[(0,n.createElementVNode)("small",{class:"copyright"},"SEMIPERU © 2022")],-1)];const a={name:"Footer"};const s=(0,c(3744).Z)(a,[["render",function(e,t,c,a,s,l){return(0,n.openBlock)(),(0,n.createElementBlock)("footer",o,r)}]])}}]);
+//# sourceMappingURL=408.js.map
