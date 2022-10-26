@@ -32,11 +32,17 @@ class RoleSeeder extends Seeder
         $updateFilePurchaseOrder        = Permission::create(['name'=> 'Update File Purchase Order']);
         $createRecordOfConformity       = Permission::create(['name'=> 'Create Record Conformity']);
         $createProofOfPayment           = Permission::create(['name'=> 'Create Proof Payment']);
+
         // ------------------------------------------------------------- //
         $proveedorRole->givePermissionTo($uploadFilePurchaseOrder);
         $proveedorRole->givePermissionTo($updateFilePurchaseOrder);
         $proveedorRole->givePermissionTo($createRecordOfConformity);
         $proveedorRole->givePermissionTo($createProofOfPayment);
+        // - PROJECT MANAGER
+        $createPurchaseRequest          = Permission::create(['name'=> 'Create Purchase Request']);
+        $updatePurchaseRequest          = Permission::create(['name'=> 'Update Purchase Request']);
+        $ProjectRole->givePermissionTo($createPurchaseRequest);
+        $ProjectRole->givePermissionTo($updatePurchaseRequest);
 
         // -------------------------- PERMISOS ADICIONALES ---------------------------- //
         $viewUsersPermission    = Permission::create(['name' => 'View users']);
@@ -102,6 +108,7 @@ class RoleSeeder extends Seeder
         $project->password = bcrypt('12345');
 
         $project->save();
+        $project->assignRole($ProjectRole);
 
         $project = new User();
 

@@ -56,7 +56,6 @@ export default {
         //     user: 'getUser'
         // }),
         getUser() {
-            console.log("JORGE USER XD");
             return this.$store.state.user;
         }
     },

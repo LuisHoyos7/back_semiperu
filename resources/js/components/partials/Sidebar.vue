@@ -37,16 +37,16 @@
                 </a>
                 <div id="submenu-3" class="submenu submenu-3 collapse" data-bs-parent="#menu-accordion" style="">
                     <ul class="submenu-list list-unstyled">
-                        <li class="submenu-item">
+                        <li class="submenu-item" v-if="(getUser?.permissions.includes('Create Purchase Request')) || false">
                             <router-link class="submenu-link" :to="{ name: 'SolicitudCompra' }">Solicitud de Compra</router-link>
                         </li>
-                        <li class="submenu-item">
+                        <li class="submenu-item" v-if="(getUser?.roles.includes('Supplier')) || false">
                             <a class="submenu-link" href="#">Orden de Compra</a>
                         </li>
-                        <li class="submenu-item">
+                        <li class="submenu-item" v-if="(getUser?.roles.includes('Supplier')) || false">
                             <a class="submenu-link" href="#">Actas de conformidad</a>
                         </li>
-                        <li class="submenu-item">
+                        <li class="submenu-item" v-if="(getUser?.roles.includes('Supplier')) || false">
                             <a class="submenu-link" href="#">Comprobantes</a>
                         </li>
                     </ul>
@@ -221,6 +221,14 @@ export default {
     name : "Sidebar",
     methods: {
 
-    }
+    },
+    computed: {
+        // ...mapGetters('getUser', {
+        //     user: 'getUser'
+        // }),
+        getUser() {
+            return this.$store.state.user;
+        }
+    },
 }
 </script>

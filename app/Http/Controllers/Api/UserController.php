@@ -26,7 +26,7 @@ class UserController extends Controller
             'datos'         => $user->datos,
             'tipo_estado_id'=> $user->tipoEstado_id,
             'roles'         => $user->getRoleNames(),
-            'permissions'   => $user->getAllPermissions(),
+            'permissions'   => $user->getAllPermissions()->pluck('name'),
             'created_at'    => $user->created_at->format('Y-m-d'),
             'updated_at'    => $user->updated_at->format('Y-m-d'),
         ]);
