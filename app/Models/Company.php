@@ -9,20 +9,9 @@ class Company extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'tipoDocumento_id',
-        'tipoEstado_id',
-        'cod',
-        'nombre',
-        'gerencias',
-        'areas',
-        'sedes',
-        'datos',
-    ];
-
     public function project(){
         return $this->hasOne(Proyecto::class, 'cliente_id', 'id');
     }
-    protected $casts = ['gerencias' => 'array','areas' => 'array','sedes' => 'array','datos' => 'array'];
+    protected $casts = ['managements' => 'array','areas' => 'array','sites' => 'array','data' => 'array'];
 
 }

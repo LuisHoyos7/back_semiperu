@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class VoucherType extends Model
 {
     use HasFactory;
+    
     protected $casts = ['data' => 'array'];
 }

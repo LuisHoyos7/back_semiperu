@@ -30,7 +30,7 @@
                 </Column> 
                  <Column header="Monto OC" filterField="cod" style="min-width:12rem">
                     <template #body="{data}">
-                        <span class="image-text">{{data.cod}}</span>
+                        <span class="image-text">{{data.code}}</span>
                     </template>
                     <template #filter="{filterModel,filterCallback}">
                         <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Buscar..."/>
@@ -38,18 +38,8 @@
                 </Column>
                 <Column header="Orden Compra"  :showFilterMenu="false" style="min-width:14rem">
                     <template #body="{data}">
-                        <span class="image-text">{{data.nombre}}</span>
+                        <span class="image-text">{{data.name}}</span>
                     </template>
-                    <!-- <template #filter="{filterModel,filterCallback}">
-                        <MultiSelect v-model="filterModel.value" @change="filterCallback()" :options="representatives" optionLabel="name" placeholder="Any" class="p-column-filter">
-                            <template #option="slotProps">
-                                <div class="p-multiselect-representative-option">
-                                    <img :alt="slotProps.option.name" src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" width="32" style="vertical-align: middle" />
-                                    <span class="image-text">{{slotProps.option.name}}</span>
-                                </div>
-                            </template>
-                        </MultiSelect>
-                    </template> -->
                 </Column>
                 <Column field="created_at" header="Fecha OC" :showFilterMenu="false" style="min-width:12rem">
                     <template #body="{data}">
@@ -58,7 +48,7 @@
                 </Column>
                 <Column field="tipoEstado_id" header="Estado OC" dataType="boolean" style="min-width:6rem">
                     <template #body="{data}">
-                        <span>{{data.tipoEstado_id}}</span>
+                        <span>{{data.state_type_id}}</span>
                     </template>
                 </Column> 
                 <Column field="" header="Ver" dataType="boolean" style="min-width:6rem">

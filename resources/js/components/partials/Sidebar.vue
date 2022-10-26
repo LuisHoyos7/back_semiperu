@@ -108,7 +108,7 @@
                             <router-link class="submenu-link" :to="{name : 'OrderBuy'}">Orden de Compra</router-link>
                         </li>
                         <li class="submenu-item">
-                            <a class="submenu-link" href="#">Actas de conformidad</a>
+                            <router-link class="submenu-link" :to="{name : 'Acts'}">Actas de conformidad</router-link>
                         </li>
                         <li class="submenu-item">
                             <a class="submenu-link" href="#">Comprobantes</a>

@@ -17,15 +17,15 @@ class OrderBuyResource extends JsonResource
     {
         return [
             'id'                    => $this->id,
-            'solicitudCompra_id'    => $this->solicitudCompra_id,
-            'tipoEstado_id'         => $this->tipoEstado_id,
-            'cod'                   => $this->cod,
-            'nombre'                => $this->nombre,
-            'detalle'               => $this->detalle,
-            'firmas'                => $this->firmas,
-            'archivos'              => $this->archivos,
-            'datos'                 => $this->datos,
-            'created_at'            => $this->created_at->format('Y-m-d H:i:s' )
+            'request_buy_id'        => $this->request_buy_id,
+            'state_type_id'         => $this->state_type_id,
+            'code'                  => $this->code,
+            'name'                  => $this->name,
+            'detail'                => $this->detail,
+            'firms'                 => $this->firms,
+            'files'                 => $this->files,
+            'data'                  => $this->data,
+            'created_at'            => $this->created_at->format('Y-m-d H:i:s')
         ];
     }
 }

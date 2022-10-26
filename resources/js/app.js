@@ -57,4 +57,4 @@ app.component('Column',Column)
 app.component('Button',Button)
 app.component('InputText',InputText)
 app.mount('#app')
-require('./portal');
+// require('./portal');
