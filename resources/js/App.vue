@@ -3,7 +3,7 @@
         <header class="app-header fixed-top">
             <div class="app-header-inner">
                 <div class="container-fluid py-2">
-                    <Header></Header>
+                   <Header></Header>
                 </div>
             </div>
             <div id="app-sidepanel" class="app-sidepanel">
@@ -16,7 +16,7 @@
         </header>
 
         <div class="app-wrapper">
-	        <div class="app-content pt-3 p-md-3 p-lg-4">
+            <div class="app-content pt-3 p-md-3 p-lg-4">
                 <div class="container-xl">
                     <router-view />
                 </div>
@@ -29,23 +29,28 @@
 
 <script>
 import {defineAsyncComponent} from "vue";
+// import Header           from './components/partials/Header';
+// import Sidebar          from './components/partials/Sidebar';
+// import Footer           from './components/partials/Footer';
+// import SidebarFooter    from './components/partials/SidebarFooter';
 
-const Header = defineAsyncComponent(()=> import("./components/partials/Header"));
-// import Header from './components/partials/Header';
-import Sidebar from './components/partials/Sidebar';
-import Footer from './components/partials//Footer';
-import SidebarFooter from './components/partials/SidebarFooter';
+// const Loading       = defineAsyncComponent(()=> import("vue-loading-overlay"));
+const Header        = defineAsyncComponent(()=> import("./components/partials/Header"));
+const Sidebar       = defineAsyncComponent(()=> import("./components/partials/Sidebar"));
+const Footer        = defineAsyncComponent(()=> import("./components/partials/Footer"));
+const SidebarFooter = defineAsyncComponent(()=> import("./components/partials/SidebarFooter"));
+
 
 export default {
     components: {
-        Header,
-        Sidebar,
         Footer,
-        SidebarFooter
+        SidebarFooter,
+        Sidebar,
+        Header
     },
-    data: ()=>{
+    data() {
         return {
-            user: null
+            hola: null
         }
     }
 }

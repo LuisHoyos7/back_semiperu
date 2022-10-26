@@ -1,5 +1,5 @@
 <template>
-    <div class="app-header-content">
+<div class="app-header-content">
     <div class="row justify-content-between align-items-center">
         <div class="col-auto">
             <a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
@@ -11,7 +11,7 @@
         <div class="app-utilities col-auto">
             <div class="app-utility-item">
                 <label class="form-label">
-                    <!-- <span class="d-none d-xl-block">{{ getUser.name }}</span> -->
+                    <span class="d-none d-xl-block">{{ getUser?.name || '' }}</span>
                 </label>
             </div>
 
@@ -33,11 +33,18 @@
 
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
     name : "Header",
     props: [
         "username"
     ],
+    data: () => {
+        return {
+            gola: {name: null},
+        }
+    },
     methods: {
         async logout(){
             await this.$store.dispatch("logout");
@@ -45,9 +52,17 @@ export default {
         }
     },
     computed: {
+        // ...mapGetters('getUser', {
+        //     user: 'getUser'
+        // }),
         getUser() {
+            console.log("JORGE USER XD");
             return this.$store.state.user;
         }
-    }
+    },
+    // mounted: function(){
+    //     this.getUser = this.$store.state.user;
+    // }
+
 }
 </script>

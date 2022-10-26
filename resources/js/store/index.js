@@ -29,7 +29,7 @@ export default createStore({
             });
         },
         async logout({ dispatch }) {
-            await axios.post(`${baseURL}/logout`);
+            axios.post(`${baseURL}/logout`);
             return dispatch("getUser");
         },
 

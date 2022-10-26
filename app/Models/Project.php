@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use HasFactory;
-<<<<<<< HEAD:app/Models/Proyecto.php
     
     Protected $table= "proyectos";
 
@@ -23,8 +22,7 @@ class Project extends Model
     public function empresa(){
         return $this->hasOne(Empresa::class, 'id');
     }
-    protected $casts = ['datos' => 'array'];
-=======
+
+    
     protected $casts = ['data' => 'array'];
->>>>>>> 14c3a9dacb3f0db8267266cfbe4780df4864cda3:app/Models/Project.php
 }
