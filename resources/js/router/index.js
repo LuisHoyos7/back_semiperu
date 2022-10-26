@@ -20,6 +20,18 @@ const routes = [{
             import ( /* webpackChunkName: "index" */ '../components/solicitudes/Compra')
     },
     {
+        path: '/orders-buy',
+        name: 'OrderBuy',
+        component: () =>
+            import ( /* webpackChunkName: "index" */ '../components/orders_buy/IndexProvider')
+    },
+    {
+        path: '/acts',
+        name: 'Acts',
+        component: () =>
+            import ( /* webpackChunkName: "index" */ '../components/acts/Index')
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: NotFound

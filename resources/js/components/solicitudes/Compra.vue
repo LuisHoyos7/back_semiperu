@@ -1,4 +1,5 @@
 <template>
+
     <div class="row g-3 mb-4 align-items-center justify-content-between">
         <div class="col-auto">
             <div>Solicitud de Compra</div>
@@ -25,16 +26,16 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Cliente:</label>
-                                    <select v-model="form.client" class="form-control form-control-sm" id="cboClienteForm">
-                                        <option v-for="client in clients"  :key="client.id"></option>
+                                    <select   @change="getProject" name="direccion1"  class="form-control form-select" v-model="form.client">
+                                        <option  v-for="item in clients" :key="item.id" :value="item.id">{{ item.nombre }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Proyecto: </label>
-                                    <select class="form-control form-control-sm" id="cboProyectoForm" name="cboProyectoForm">
-                                        <option value="" selected disabled>[ SELECCIONE ]</option>
+                                    <label>Proyecto:</label>
+                                    <select  @change="getSubObra"  name="direccion1"  class="form-control form-select" v-model="form.project">
+                                        <option v-for="item in projects" :key="item.id" :value="item.id">{{ item.nombre }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -46,19 +47,19 @@
                             </div> -->
                         </div>
                         <div class="row mt-1">
-                            <div class="col-md-3">
+                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Sub Obra: </label>
-                                    <select class="form-control form-control-sm" id="nombreProyectoForm" name="nombreProyectoForm">
-                                        <option value="" selected disabled>[ SELECCIONE ]</option>
+                                    <label>Sub Obra:</label>
+                                    <select  name="direccion1"  class="form-control form-select" v-model="form.subObra">
+                                        <option v-for="item in subObras" :key="item.id" :value="item.id">{{ item.nombre }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Proveedor: </label>
-                                    <select class="form-control form-control-sm" name="proveedorForm" id="proveedorForm">
-                                        <option value="" selected disabled>[ SELECCIONE ]</option>
+                                    <label>Proveedor:</label>
+                                    <select  name="direccion1"  class="form-control form-select" v-model="form.proveedor">
+                                        <option  v-for="item in clients" :key="item.id" :value="item.id">{{ item.nombre }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -66,7 +67,6 @@
                                 <div class="form-group">
                                     <label>Moneda: </label>
                                     <select class="form-control form-control-sm" name="monedaForm" id="monedaForm">
-                                        <option value="" selected disabled>[ SELECCIONE ]</option>
                                         <option value="PEN">SOLES</option>
                                         <option value="USD">DOLARES</option>
                                         <option value="EUR">EUROS</option>
@@ -75,9 +75,9 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Solicitante: </label>
-                                    <select name="solicitanteForm" id="solicitanteForm" class="form-control form-control-sm">
-                                        <option value="" selected disabled>[ SELECCIONE ]</option>
+                                    <label>Solicitante:</label>
+                                    <select   name="direccion1"  class="form-control form-select" v-model="form.user">
+                                        <option  v-for="item in users" :key="item.id" :value="item.id">{{ item.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -131,34 +131,49 @@ import axios from 'axios';
 export default {
     data(){
         return {
-            clients : [],
+            step : 1,
+            clients  :  [],
+            projects :  [],
+            subObras :  [],
+            users    :  [],
             form:{
                 client: null,
-            }
+                subObra:null,
+                project:null,
+                proveedor: null,
+                user : null,
+            },
         }
     },
     methods : {
-         getDataDebtor() {
+         getProject() {
+            var id = this.form.client
             axios
-                .get(`/api/debtor`)
-                .then((resp) => {
-                    this.debtor = resp.data;
-                    this.debtor_name = `${this.debtor.name} ${this.debtor.lastname}`;
+                .get(`api/project/${id}`)
+                .then((res) => {
+                     this.projects = res.data;
+                    console.log('projects', res.data)
                 })
-                .catch((err) => {
-                    Swal.fire(
-                        "Contactar al administrador!",
-                        "Algo salio mal al obener al deudor!",
-                        "error"
-                    );
-                });
+        },
+
+        getSubObra(){
+            var id = this.form.project
+            axios
+                .get(`api/sub_obras/${id}`)
+                .then((res) => {
+                    this.subObras = res.data;
+                    console.log('sub_obras', this.projects)
+                })
         },
     },
     mounted(){
         axios
             .get("api/client")
             .then((res) => {
-                this.clients = res.data
+                this.clients = res.data.empresa
+                this.users = res.data.user
+                console.log('clientes',this.clients);
+                console.log('users',this.users);
         })
     }
 }

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Area extends Model
 {
     use HasFactory;
-    protected $casts = ['datos' => 'array'];
+    protected $casts = ['data' => 'array'];
 }
