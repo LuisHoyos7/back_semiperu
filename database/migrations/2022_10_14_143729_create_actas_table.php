@@ -20,8 +20,9 @@ class CreateActasTable extends Migration
             $table->string('cod');
             $table->string('nombre');
             $table->json('detalle')->nullable();
-            $table->json('firmas')->nullable();
-            $table->json('comprobantes')->nullable();
+            $table->json('firmas_acta')->nullable();
+            $table->json('comprobante')->nullable();
+            $table->json('firmas_comprobante')->nullable();
             $table->json('archivos')->nullable();
             $table->json('datos')->nullable();
             $table->timestamps();

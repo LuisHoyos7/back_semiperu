@@ -20,4 +20,5 @@ class SubObra extends Model
         'datos',
     ];
 
+    protected $casts = ['detalle' => 'array','datos' => 'array'];
 }

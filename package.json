@@ -28,6 +28,8 @@
         "@popperjs/core": "^2.10.1",
         "datatables.net": "^1.11.3",
         "laravel-vue-pagination": "^2.3.1",
+        "primeicons": "^6.0.1",
+        "primevue": "^3.17.0",
         "sweetalert": "^2.1.2",
         "vue": "^3.2.36",
         "vue-next-select": "^2.10.4",

@@ -11,7 +11,7 @@
         <div class="app-utilities col-auto">
             <div class="app-utility-item">
                 <label class="form-label">
-                    <span class="d-none d-xl-block">{{ getUser.name }}</span>
+                    <!-- <span class="d-none d-xl-block">{{ getUser.name }}</span> -->
                 </label>
             </div>
 

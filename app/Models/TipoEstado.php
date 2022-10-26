@@ -9,12 +9,11 @@ class TipoEstado extends Model
 {
     use HasFactory;
 
-    Protected $table="clients";
-
     protected $fillable = [
         'id',
         'code',
         'name', 
         'type',   
     ];
+    protected $casts = ['datos' => 'array'];
 }

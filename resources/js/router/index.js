@@ -20,6 +20,12 @@ const routes = [{
             import ( /* webpackChunkName: "index" */ '../components/solicitudes/Compra')
     },
     {
+        path: '/orders-buy',
+        name: 'OrderBuy',
+        component: () =>
+            import ( /* webpackChunkName: "index" */ '../components/orders_buy/IndexProvider')
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: NotFound

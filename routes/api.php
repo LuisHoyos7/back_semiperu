@@ -9,6 +9,6 @@ Route::get('/user', [UserController::class,'index']);
 Route::apiResource('client', ClientController::class);
 Route::apiResource('project', ProjectController::class);
 Route::apiResource('sub_obras', SubObraController::class);
-
+Route::apiResource('order_buy', OrderBuyController::class);
 
 

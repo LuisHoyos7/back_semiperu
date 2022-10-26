@@ -15,12 +15,10 @@ class CreateLotesTable extends Migration
     {
         Schema::create('lotes', function (Blueprint $table) {
             $table->id();
-            $table->integer('acta_id');
             $table->integer('tipoEstado_id');
             $table->string('cod');
             $table->string('nombre');
             $table->json('detalle')->nullable();
-            $table->json('firmas')->nullable();
             $table->json('datos')->nullable();
             $table->timestamps();
         });

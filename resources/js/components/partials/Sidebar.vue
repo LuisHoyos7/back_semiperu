@@ -102,10 +102,10 @@
                 <div id="submenu-4" class="submenu submenu-4 collapse" data-bs-parent="#menu-accordion" style="">
                     <ul class="submenu-list list-unstyled">
                         <li class="submenu-item">
-                            <a class="submenu-link" href="#">Solicitud de Compra</a>
+                            <a class="submenu-link" >Solicitud de Compra</a>
                         </li>
                         <li class="submenu-item">
-                            <a class="submenu-link" href="#">Orden de Compra</a>
+                            <router-link class="submenu-link" :to="{name : 'OrderBuy'}">Orden de Compra</router-link>
                         </li>
                         <li class="submenu-item">
                             <a class="submenu-link" href="#">Actas de conformidad</a>

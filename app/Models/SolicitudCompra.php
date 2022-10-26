@@ -13,7 +13,7 @@ class SolicitudCompra extends Model
 
     protected $fillable = [
         'subObra_id',
-        'provvedor_id',
+        'proveedor_id',
         'encargado_id', 
         'tipoMoneda_id',
         'tipoEstado_id',
@@ -25,5 +25,5 @@ class SolicitudCompra extends Model
         'datos',
     ];
     
-    protected $casts = ['detalle' => 'array'];
+    protected $casts = ['detalle' => 'array','datos' => 'array'];
 }

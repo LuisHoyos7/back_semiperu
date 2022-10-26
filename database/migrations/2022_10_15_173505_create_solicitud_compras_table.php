@@ -15,7 +15,6 @@ class CreateSolicitudComprasTable extends Migration
     {
         Schema::create('solicitud_compras', function (Blueprint $table) {
             $table->id();
-            $table->integer('subObra_id');
             $table->integer('proveedor_id');
             $table->integer('encargado_id');
             $table->integer('tipoMoneda_id');

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderBuyResource;
 use Illuminate\Http\Request;
+use App\Models\OrderBuy;
 
 class OrderBuyController extends Controller
 {
@@ -14,7 +16,7 @@ class OrderBuyController extends Controller
      */
     public function index()
     {
-        //
+        return OrderBuyResource::collection(OrderBuy::all());
     }
 
     /**

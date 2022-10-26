@@ -22,4 +22,5 @@ class Proyecto extends Model
     public function empresa(){
         return $this->hasOne(Empresa::class, 'id');
     }
+    protected $casts = ['datos' => 'array'];
 }
