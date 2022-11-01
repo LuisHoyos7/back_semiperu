@@ -430,7 +430,7 @@ class DatabaseSeeder extends Seeder
         $model->payment_method = 'Transferencia';
         $model->payment_term = '7 días';
         $model->detail = [
-            ['state_type_id'=>1,'sub_work_id'=>3,'unit_measure_id'=>1,'Servicios PEXT_S412772-S412773 || FIBERLUX (Huasao)'=>'description 1','price'=>300,'amount'=>1]
+            ['state_type_id'=>1,'sub_work_id'=>3,'unit_measure_id'=>1,'description'=>'Servicios PEXT_S412772-S412773 || FIBERLUX (Huasao)','price'=>300,'amount'=>1]
         ];
         $model->data = [];
         $model->save();
@@ -457,9 +457,9 @@ class DatabaseSeeder extends Seeder
         $model->request_buy_id = 2;
         $model->state_type_id = 7;
         $model->code = '906.0620.60409.22';
-        $model->name = 'Solicitud de compra 2';
+        $model->name = 'Orden de compra 2';
         $model->detail = [
-            ['state_type_id'=>1,'sub_work_id'=>3,'unit_measure_id'=>1,'Servicios PEXT_S412772-S412773 || FIBERLUX (Huasao)'=>'description 1','price'=>9999.99]
+            ['state_type_id'=>1,'unit_measure_id'=>1,'description'=>'Servicios PEXT_S412772-S412773 || FIBERLUX (Huasao)','price'=>1000,'amount'=>1]
         ];
         $model->firms = [
             ['state_type_id'=>1,'user_id'=>6,'action'=>'A','comment'=>'O.K.','fecha'=>'2022-10-23 14:00:00']
@@ -524,8 +524,8 @@ class DatabaseSeeder extends Seeder
         $model->code = 'A002';
         $model->name = 'Act 2';
         $model->detail = [
-            ['state_type_id'=>1,'act_id'=>1,'detail_order_buy_id'=>0],
-            ['state_type_id'=>1,'act_id'=>2,'detail_order_buy_id'=>0,'amount'=>0.5]
+            ['state_type_id'=>1,'detail_order_buy_id'=>0,'amount'=>0.5],
+            ['state_type_id'=>1,'detail_order_buy_id'=>0,'amount'=>0.5]
         ];
         $model->files = [
             ['state_type_id'=>1,'src'=>'../documentos/2022/OCTUBRE/Act/A002/A002.pdf']
@@ -616,8 +616,8 @@ class DatabaseSeeder extends Seeder
         $model->code = 'L001';
         $model->name = 'Lot 1';
         $model->detail = [
-            ['state_type_id'=>7,'act_id'=>1,'detailvoucher_id'=>0],
-            ['state_type_id'=>7,'act_id'=>2,'detailvoucher_id'=>0]
+            ['state_type_id'=>7,'act_id'=>1,'detail_voucher_id'=>0],
+            ['state_type_id'=>7,'act_id'=>2,'detail_voucher_id'=>0]
         ];
         $model->firms = [
             ['state_type_id'=>1,'user_id'=>6,'action'=>'A','comment'=>'O.K.','fecha'=>'2022-10-23 16:00:00'],
@@ -631,7 +631,7 @@ class DatabaseSeeder extends Seeder
         $model->code = 'L002';
         $model->name = 'Lot 2';
         $model->detail = [
-            ['state_type_id'=>7,'act_id'=>3,'detailvoucher_id'=>0]
+            ['state_type_id'=>7,'act_id'=>3,'detail_voucher_id'=>0]
         ];
         $model->firms = [
             ['state_type_id'=>1,'user_id'=>6,'action'=>'A','comment'=>'O.K.','fecha'=>'2022-10-23 16:00:00'],
