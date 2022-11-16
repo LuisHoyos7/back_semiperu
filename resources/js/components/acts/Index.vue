@@ -1,17 +1,20 @@
 <template>
-    <div>
-      <div class="card">
-            <h5 class="m-4">Actas de conformidad</h5>
-           
+    <div> 
+      <div class="card">           
             <DataTable :value="acts" :paginator="true"  :rows="10"
-                dataKey="id" v-model:filters="filters2" filterDisplay="row"  responsiveLayout="scroll"
-                :globalFilterFields="['id','tipoEstado_id','cod','nombre', 'created_at']">
+                dataKey="id" v-model:filters="filters2" class="p-datatable-sm" filterDisplay="row"  responsiveLayout="scroll"
+                :globalFilterFields="['id']">
                 <template #header>
-                    <div class="flex justify-content-end">
-                        <span class="p-input-icon-left ">
-                            <i class="pi pi-search" />
-                            <InputText v-model="filters2['global'].value" placeholder="Buscar en toda la tabla..." />
-                        </span>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="">Actas de conformidad</h5>
+                        </div>
+                        <div class="col" style="text-align:end;">
+                            <span class="p-input-icon-left ">
+                                <i class="pi pi-search" />
+                                <InputText v-model="filters2['global'].value" placeholder="Buscar en toda la tabla..." />
+                            </span>
+                        </div>
                     </div>
                 </template>
                 <template #empty>
@@ -20,79 +23,138 @@
                 <!-- <template #loading>
                     Loading customers data. Please wait.
                 </template> -->
-                <Column field="id" header="N°" style="min-width:12rem">
+                <Column field="id" header="N°" style="min-width:4rem">
                     <template #body="{data}">
                         {{data.id}}
                     </template>
-                    <template #filter="{filterModel,filterCallback}">
-                        <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Buscar..."/>
-                    </template>
                 </Column> 
-                 <Column header="Nro. Acta" filterField="cod" style="min-width:12rem">
+                 <Column header="Nro. Acta" filterField="cod" style="min-width:6rem">
                     <template #body="{data}">
                         <span class="image-text">{{data.code}}</span>
                     </template>
+                    <!-- <template #filter="{filterModel,filterCallback}">
+                        <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Buscar..."/>
+                    </template> -->
+                </Column>
+                <Column field="order_buy.code" header="Orden Compra"  :showFilterMenu="false" style="min-width:10rem">
+                    <template #body="{data}">
+                        <span class="image-text">{{data.order_buy.code}}</span>
+                    </template>
                     <template #filter="{filterModel,filterCallback}">
                         <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Buscar..."/>
                     </template>
                 </Column>
-                <Column header="Orden Compra"  :showFilterMenu="false" style="min-width:14rem">
-                    <template #body="{data}">
-                        <span class="image-text">{{data.name}}</span>
-                    </template>
-                </Column>
-                <Column field="created_at" header="Nro Proyecto" :showFilterMenu="false" style="min-width:12rem">
+               
+                <!-- <Column field="created_at" header="Nro Proyecto" :showFilterMenu="false" style="min-width:12rem">
                     <template #body="{data}">
                         <span :class="'customer-badge status-' + data.created_at">{{data.created_at}}</span>
                     </template>
-                </Column>
-                <Column field="tipoEstado_id" header="Fecha Aprobacion" dataType="boolean" style="min-width:6rem">
+                </Column> -->
+                <Column field="created_at" header="Fecha Aprobacion" dataType="boolean" style="min-width:6rem">
+                    <template #body="{data}">
+                        <span>{{data.created_at}}</span>
+                    </template>
+                    <template #filter="{filterModel,filterCallback}">
+                        <InputText type="date" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Buscar..."/>
+                    </template>
+                </Column> 
+                <Column field="sumOrderBuyId" header="Total Acta" dataType="boolean" style="min-width:6rem">
+                  <template #body="{data}">
+                        <span>
+                            {{data.sumOrderBuyId * (data.detail.map(item => item.amount).reduce((prev, curr) => (prev + curr), 0) / data.detail.length)}}
+                        </span>
+                    </template>
+                    <template #filter="{filterModel,filterCallback}">
+                        <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Buscar..."/>
+                    </template>
+                </Column> 
+                <Column field="" header="% O.C" dataType="boolean" style="min-width:6rem">
+                    <template #body="slotProps">
+                        <template v-if="slotProps.data.id === 1">
+                            {{(slotProps.data.detail.map(item => item.amount).reduce((prev, curr) => (prev + curr), 0) / slotProps.data.detail.length) * 100 }} %
+                        </template>
+                        <template v-else-if="acts[slotProps.index + 1].order_buy_id === acts[slotProps.index].order_buy_id">
+                            {{((acts[slotProps.index + 1].detail.map(item => item.amount).reduce((prev, curr) => (prev + curr), 0) / acts[slotProps.index + 1].detail.length) + (acts[slotProps.index].detail.map(item => item.amount).reduce((prev, curr) => (prev + curr), 0) / acts[slotProps.index].detail.length)) * 100 }} %
+                        </template>
+                        <template v-else>
+                            <span>
+                                {{(slotProps.data.detail.map(item => item.amount).reduce((prev, curr) => (prev + curr), 0) / slotProps.data.detail.length) * 100 }} %
+                            </span>
+                        </template>
+                    </template>
+                </Column> 
+                <Column field="" header="Historial % Acta" dataType="boolean" style="min-width:6rem">
+                    <template #body="{data}">
+                        <span>
+                            {{(data.detail.map(item => item.amount).reduce((prev, curr) => (prev + curr), 0) / data.detail.length) * 100 }} %
+                        </span>
+                    </template>
+                </Column> 
+                <Column field="state_type_id" header="Estado Acta" dataType="boolean" style="min-width:6rem">
                     <template #body="{data}">
                         <span>{{data.state_type_id}}</span>
                     </template>
+                    <template #filter="{filterModel,filterCallback}">
+                        <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses" placeholder="Seleccione" class="p-column-filter" :showClear="true">
+                            <template #value="slotProps">
+                                <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{slotProps.value}}</span>
+                                <span v-else>{{slotProps.placeholder}}</span>
+                            </template>
+                            <template #option="slotProps">
+                                <span :class="'customer-badge status-' + slotProps.option">{{slotProps.option}}</span>
+                            </template>
+                        </Dropdown>
+                    </template>
                 </Column> 
-                <Column field="" header="Total Acta" dataType="boolean" style="min-width:6rem">
-                 
-                </Column> 
-                <Column field="" header="% O.C" dataType="boolean" style="min-width:6rem">
-                    
-                </Column> 
-                <Column field="" header="Historial % Acta" dataType="boolean" style="min-width:6rem">
-                 
-                </Column> 
-                <Column field="" header="Estado Acta" dataType="boolean" style="min-width:6rem">
-                    <template #body>
-                        <a @click="showModalOrder">
+                <Column :sortable="true" field="" header="Ver" dataType="boolean" style="min-width:4rem">
+                    <template #body="{data}">
+                        <a @click="showModalOrder(data.id)">
                             <i class="pi pi-eye" ></i>
                         </a>
                     </template>
                 </Column> 
             </DataTable>
         </div>
+
+        <Dialog header="Header" v-model:visible="displayModalAct" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <template #footer>
+                <Button label="No" icon="pi pi-times" @click="closeBasic" class="p-button-text"/>
+                <Button label="Yes" icon="pi pi-check" @click="closeBasic" autofocus />
+            </template>
+        </Dialog>
     </div>
 </template>
 
-<script>
+<script> 
 import {FilterMatchMode,FilterOperator} from 'primevue/api';
 export default {
     data() {
         return {
+            displayModalAct: false,
             filters2: {
                 'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-                'id': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
-                'cod': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
+                'sumOrderBuyId': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
+                'created_at': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
+                'state_type_id': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
+                'order_buy.code': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
                 // 'representative': {value: null, matchMode: FilterMatchMode.IN},
                 // 'status': {value: null, matchMode: FilterMatchMode.EQUALS},
                 // 'verified': {value: null, matchMode: FilterMatchMode.EQUALS}
             },
-
-            ordersBuy :[],
+            statuses: [
+                'Activo', 'Inactivo', 'Pendiente', 'Observado', 'Rechazado', 'Liberado', 'Procesado'
+            ],
+            acts :[],
         }
     },
 
     methods :{
         showModalOrder(){
-            alert(this.modal);
+            displayModalAct = true;
         },
         getActs(){
             axios.get(`api/acts`).then((res) => {
@@ -101,7 +163,7 @@ export default {
             })
         },
     },
-
+ 
     created(){
         this.getActs();
     }
@@ -109,6 +171,86 @@ export default {
 </script>
 
 <style lang="scss">
+
+.p-column-filter-row .p-column-filter-element{
+    width: 120% !important;
+}
+::v-deep(.p-paginator) {
+    .p-paginator-current {
+        margin-left: auto;
+    }
+}
+
+::v-deep(.p-progressbar) {
+    height: .5rem;
+    background-color: #D8DADC;
+
+    .p-progressbar-value {
+        background-color: #607D8B;
+    }
+}
+
+::v-deep(.p-datepicker) {
+    min-width: 25rem;
+
+    td {
+        font-weight: 400;
+    }
+}
+
+::v-deep(.p-datatable.p-datatable-customers) {
+    .p-datatable-header {
+        padding: 1rem;
+        text-align: left;
+        font-size: 1.5rem;
+    }
+
+    .p-paginator {
+        padding: 1rem;
+    }
+
+    .p-datatable-thead > tr > th {
+        text-align: left;
+    }
+
+    .p-datatable-tbody > tr > td {
+        cursor: auto;
+    }
+
+    .p-dropdown-label:not(.p-placeholder) {
+        text-transform: uppercase;
+    }
+}
+</style>
+
+<style lang="scss">
+
+.p-inputtext {
+ padding: 0rem 0.5rem;
+}
+
+.pi-file-pdf, .pi-check{
+    color: white;
+}
+td{
+    width: 50px !important;
+    font-size: 12px !important;
+}
+
+.pi-fw {
+    font-size: 0.7rem !important;
+}
+
+th{
+   font-size: 14px !important;
+} 
+
+.p-fluid .p-inputtext {
+    height: 30px !important;
+}
+.p-inputtext{
+    height: 35px;;
+}
 
 .p-column-filter-row .p-column-filter-element{
     width: 120% !important;

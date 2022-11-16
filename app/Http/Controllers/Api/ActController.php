@@ -5,18 +5,26 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Act;
+use Illuminate\Http\JsonResponse;
 use App\Http\Resources\ActResource;
 
 class ActController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $acts;
+    
+    public function __construct(Act $acts)
+    {
+        $this->acts = $acts;
+    }
+
     public function index()
     {
-        return ActResource::collection(Act::all());
+        // return response()->json(
+        //     new ActResource(
+        //         $this->acts->orderBy('id', 'desc')->get()
+        //     )
+        // );
+        return ActResource::collection(Act::orderBy('order_buy_id','desc')->orderBy('id','desc')->get());
     }
 
     /**

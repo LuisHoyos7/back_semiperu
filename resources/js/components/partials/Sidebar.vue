@@ -37,17 +37,17 @@
                 </a>
                 <div id="submenu-3" class="submenu submenu-3 collapse" data-bs-parent="#menu-accordion" style="">
                     <ul class="submenu-list list-unstyled">
-                        <li class="submenu-item" v-if="(getUser?.permissions.includes('Create Purchase Request')) || false">
+                        <li class="submenu-item" >
                             <router-link class="submenu-link" :to="{ name: 'SolicitudCompra' }">Solicitud de Compra</router-link>
                         </li>
-                        <li class="submenu-item" v-if="(getUser?.roles.includes('Supplier')) || false">
+                        <li class="submenu-item" >
                             <a class="submenu-link" href="#">Orden de Compra</a>
                         </li>
-                        <li class="submenu-item" v-if="(getUser?.roles.includes('Supplier')) || false">
+                        <li class="submenu-item" >
                             <a class="submenu-link" href="#">Actas de conformidad</a>
                         </li>
-                        <li class="submenu-item" v-if="(getUser?.roles.includes('Supplier')) || false">
-                            <a class="submenu-link" href="#">Comprobantes</a>
+                        <li class="submenu-item" >
+                            <router-link class="submenu-link" :to="{name : 'VoucherCreate'}">Comprobantes</router-link>
                         </li>
                     </ul>
                 </div>
@@ -111,7 +111,7 @@
                             <router-link class="submenu-link" :to="{name : 'Acts'}">Actas de conformidad</router-link>
                         </li>
                         <li class="submenu-item">
-                            <a class="submenu-link" href="#">Comprobantes</a>
+                            <router-link class="submenu-link" :to="{name : 'Vouchers'}">Comprobantes</router-link>
                         </li>
                     </ul>
                 </div>

@@ -18,14 +18,15 @@ class OrderBuyResource extends JsonResource
         return [
             'id'                    => $this->id,
             'request_buy_id'        => $this->request_buy_id,
-            'state_type_id'         => $this->state_type_id,
+            'state_type'            => StateTypeResource::make($this->states),
             'code'                  => $this->code,
             'name'                  => $this->name,
             'detail'                => $this->detail,
             'firms'                 => $this->firms,
             'files'                 => $this->files,
             'data'                  => $this->data,
-            'created_at'            => $this->created_at->format('Y-m-d H:i:s')
+            'created_at'            => $this->created_at->format('Y-m-d H:i:s'),
+            'year_order'            => $this->created_at->format('Y')
         ];
     }
 }

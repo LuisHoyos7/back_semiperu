@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\SubObra;
+use App\Models\SubWork;
 
 class SubObraController extends Controller
 {
@@ -37,7 +37,7 @@ class SubObraController extends Controller
      */
     public function show($id)
     {
-        return SubObra::where('proyecto_id', $id)->get(); 
+        return SubWork::where('project_id', $id)->get(); 
     }
 
     /**

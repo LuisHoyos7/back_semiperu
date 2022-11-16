@@ -1,183 +1,278 @@
-<template>
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@lfnetgrit 
+Bilolhussain
+/
+UserVue
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security
+Insights
+UserVue/src/views/AddEmployee.vue
+@Bilolhussain
+Bilolhussain First commit
+Latest commit 25c891f on Oct 10, 2021
+ History
+ 1 contributor
+274 lines (231 sloc)  5.25 KB
 
-    <div class="row g-3 mb-4 align-items-center justify-content-between">
-        <div class="col-auto">
-            <div>Solicitud de Compra</div>
+<template>
+    <div>
+        <Toast/>
+
+        <div class="card">
+            <Steps :model="items" :readonly="true" />
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12 col-sm-12 col-md-12">
-            <div class="card border-success">
-                <div class="card-header d-flex justify-content-between">
-                    <div>Crear solicitud de compra</div>
-                    <div class="notificacion-type status-badge mb-2">
-                        <span class="badge bg-info">Pendiente</span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <form>
-                        <div class="row">
-                            <!-- <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>RQ:</label>
-                                    <input type="text" class="form-control form-control-sm" id="nroForm" name="nroForm">
-                                </div>
-                            </div> -->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Cliente:</label>
-                                    <select   @change="getProject" name="direccion1"  class="form-control form-select" v-model="form.client">
-                                        <option  v-for="item in clients" :key="item.id" :value="item.id">{{ item.nombre }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Proyecto:</label>
-                                    <select  @change="getSubObra"  name="direccion1"  class="form-control form-select" v-model="form.project">
-                                        <option v-for="item in projects" :key="item.id" :value="item.id">{{ item.nombre }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Nombre Proyecto: </label>
-                                    <input type="text" class="form-control form-control-sm" id="nombreProyectoForm" name="nombreProyectoForm" disabled>
-                                </div>
-                            </div> -->
-                        </div>
-                        <div class="row mt-1">
-                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Sub Obra:</label>
-                                    <select  name="direccion1"  class="form-control form-select" v-model="form.subObra">
-                                        <option v-for="item in subObras" :key="item.id" :value="item.id">{{ item.nombre }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Proveedor:</label>
-                                    <select  name="direccion1"  class="form-control form-select" v-model="form.proveedor">
-                                        <option  v-for="item in clients" :key="item.id" :value="item.id">{{ item.nombre }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Moneda: </label>
-                                    <select class="form-control form-control-sm" name="monedaForm" id="monedaForm">
-                                        <option value="PEN">SOLES</option>
-                                        <option value="USD">DOLARES</option>
-                                        <option value="EUR">EUROS</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Solicitante:</label>
-                                    <select   name="direccion1"  class="form-control form-select" v-model="form.user">
-                                        <option  v-for="item in users" :key="item.id" :value="item.id">{{ item.name }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Fecha solicitud: </label>
-                                    <input type="date" class="form-control form-control-sm" name="fechaSolicitudForm" id="fechaSolicitudForm">
-                                </div>
-                            </div> -->
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-12 app-card app-card-orders-table shadow-sm mb-5 mt-3">
-                                <div class="app-card-body">
-                                    <div class="table-responsive">
-                                        <table class="table app-table-hover text-center">
-                                            <thead>
-                                                <tr>
-                                                    <!-- <th class="cell">SubObra</th>
-                                                    <th class="cell">Site</th> -->
-                                                    <th class="cell">Descripción</th>
-                                                    <th class="cell">Unidad</th>
-                                                    <th class="cell">Cantidad</th>
-                                                    <th class="cell">Precio Unitario (Sin IGV)</th>
-                                                    <th class="cell">Precio Total (Sin IGV)</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="cell">DESCRIPCION 1</td>
-                                                    <td class="cell">UND</td>
-                                                    <td class="cell">1</td>
-                                                    <td class="cell">2,900.00</td>
-                                                    <td class="cell">2,900.00</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+
+        <router-view v-slot="{Component}" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete">
+            <keep-alive>
+                <component :is="Component" />
+            </keep-alive>
+        </router-view>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
-
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useToast } from 'primevue/usetoast';
 export default {
-    data(){
-        return {
-            step : 1,
-            clients  :  [],
-            projects :  [],
-            subObras :  [],
-            users    :  [],
-            form:{
-                client: null,
-                subObra:null,
-                project:null,
-                proveedor: null,
-                user : null,
+    setup() {
+        const router = useRouter();
+        // const toast = useToast();
+        const items = ref([
+            {
+                label: 'Personal',
+                to: "/personal"
             },
-        }
-    },
-    methods : {
-         getProject() {
-            var id = this.form.client
-            axios
-                .get(`api/project/${id}`)
-                .then((res) => {
-                     this.projects = res.data;
-                    console.log('projects', res.data)
-                })
-        },
-
-        getSubObra(){
-            var id = this.form.project
-            axios
-                .get(`api/sub_obras/${id}`)
-                .then((res) => {
-                    this.subObras = res.data;
-                    console.log('sub_obras', this.projects)
-                })
-        },
-    },
-    mounted(){
-        axios
-            .get("api/client")
-            .then((res) => {
-                this.clients = res.data.empresa
-                this.users = res.data.user
-                console.log('clientes',this.clients);
-                console.log('users',this.users);
-        })
+            {
+                label: 'Seat',
+                to: "/seat",
+            },
+            {
+                label: 'Payment',
+                to: "/payment",
+            }
+            // {
+            //     label: 'Confirmation',
+            //     to: "/confirmation",
+            // }
+        ]);
+        const formObject = ref({});
+        const nextPage = (event) => {
+            for (let field in event.formData) {
+                formObject.value[field] = event.formData[field];
+            }
+            router.push(items.value[event.pageIndex + 1].to);
+        };
+        const prevPage = (event) => {
+            router.push(items.value[event.pageIndex - 1].to);
+        };
+        const complete = () => {
+            toast.add({severity:'success', summary:'Order submitted', detail: 'Dear, ' + formObject.value.firstname + ' ' + formObject.value.lastname + ' your order completed.'});
+        };
+        return { items, formObject, nextPage, prevPage, complete }
     }
 }
 </script>
-<style>
 
+<style scoped lang="scss">
+::v-deep(b) {
+    display: block;
+}
+::v-deep(.p-card-body) {
+    padding: 2rem;
+}
+html {
+    font-size: 14px;
+}
+body {
+    background-color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    font-weight: normal;
+    color: #495057;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: .5em;
+    margin-bottom: 50px;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 1.5rem 0 1rem 0;
+    font-family: inherit;
+    font-weight: 600;
+    line-height: 1.2;
+    color: inherit;
+}
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+p {
+    line-height: 1.5;
+    margin: 0 0 1rem 0;
+}
+.card {
+    margin-bottom: 2rem;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+@keyframes pulse {
+    0% {
+        background-color: rgba(165, 165, 165, 0.1)
+    }
+    50% {
+        background-color: rgba(165, 165, 165, 0.3)
+    }
+    100% {
+        background-color: rgba(165, 165, 165, 0.1)
+    }
+}
+.customer-badge {
+    border-radius: 2px;
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+}
+.customer-badge.status-qualified {
+    background-color: #C8E6C9;
+    color: #256029;
+}
+.customer-badge.status-unqualified {
+    background-color: #FFCDD2;
+    color: #C63737;
+}
+.customer-badge.status-negotiation {
+    background-color: #FEEDAF;
+    color: #8A5340;
+}
+.customer-badge.status-new {
+    background-color: #B3E5FC;
+    color: #23547B;
+}
+.customer-badge.status-renewal {
+    background-color: #ECCFFF;
+    color: #694382;
+}
+.customer-badge.status-proposal {
+    background-color: #FFD8B2;
+    color: #805B36;
+}
+.product-badge {
+    border-radius: 2px;
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+}
+.product-badge.status-instock {
+    background: #C8E6C9;
+    color: #256029;
+}
+.product-badge.status-outofstock {
+    background: #FFCDD2;
+    color: #C63737;
+}
+.product-badge.status-lowstock {
+    background: #FEEDAF;
+    color: #8A5340;
+}
+.order-badge {
+    border-radius: 2px;
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+}
+.order-badge.order-delivered {
+    background: #C8E6C9;
+    color: #256029;
+}
+.order-badge.order-cancelled {
+    background: #FFCDD2;
+    color: #C63737;
+}
+.order-badge.order-pending {
+    background: #FEEDAF;
+    color: #8A5340;
+}
+.order-badge.order-returned {
+    background: #ECCFFF;
+    color: #694382;
+}
+.image-text {
+    margin-left: .5rem;
+}
+.p-multiselect-representative-option {
+    display: inline-block;
+    vertical-align: middle;
+}
+.p-multiselect-representative-option img {
+    vertical-align: middle;
+    width: 24px;
+}
+.p-multiselect-representative-option span {
+    margin-top: .125rem;
+}
+.country-item {
+    display: flex;
+    align-items: center;
+}
+.country-item img.flag {
+    width: 18px;
+    margin-right: .5rem;
+}
+.flag {
+    vertical-align: middle;
+}
+span.flag {
+    width:44px;
+    height:30px;
+    display:inline-block;
+}
+img.flag {
+    width:30px
+}
+.true-icon {
+    color: #256029;
+}
+.false-icon {
+    color: #C63737;
+}
 </style>
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+UserVue/src at main · Bilolhussain/UserVueUserVue/src/views at main · Bilolhussain/UserVueUserVue/AddEmployee.vue at main · Bilolhussain/UserVue

@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class StateType extends Model
 {
     use HasFactory;
+
     protected $casts = ['data' => 'array'];
 }

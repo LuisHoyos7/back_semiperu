@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Proyecto;
+use App\Models\Project;
 use App\Models\Empresa;
 use App\Http\Resources\ProjectResource;
 
@@ -12,13 +12,13 @@ class ProjectController extends Controller
 {
     protected $project;
 
-    public function __construct(Proyecto $project) {
+    public function __construct(Project $project) {
         $this->project = $project;
     }
 
     public function index()
     {
-        return ProjectResource::collection(Proyecto::paginate(10));
+        return ProjectResource::collection(Project::paginate(10));
 
     }
 
@@ -30,7 +30,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        return new ProjectResource(Proyecto::create($request->all()));
+        return new ProjectResource(Project::create($request->all()));
 
     }
 
@@ -43,7 +43,7 @@ class ProjectController extends Controller
     public function show($id)
     {
         return response()->json(
-             $this->project->where('cliente_id', $id)->get()
+             $this->project->where('company_id', $id)->get()
         );
     }
 
@@ -54,11 +54,11 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Proyecto $proyecto)
+    public function update(Request $request, Project $Project)
     {
-        $proyecto->update($request->all());
+        $Project->update($request->all());
 
-        return new ProjectResource($proyecto);
+        return new ProjectResource($Project);
     }
 
     /**
@@ -67,10 +67,10 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Proyecto $proyecto)
+    public function destroy(Project $Project)
     {
-        $proyecto->delete();
+        $Project->delete();
 
-        return new ProjectResource($proyecto);
+        return new ProjectResource($Project);
     }
 }

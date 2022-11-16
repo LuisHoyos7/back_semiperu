@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Empresa;
+use App\Models\Company;
 use App\Models\User;
 use App\Http\Resources\ClientResource;
 
@@ -14,11 +14,11 @@ class ClientController extends Controller
 
     public function index()
     {
-        $empresa  = Empresa::get();
+        $company  = Company::get();
         $user = User::role('Project')->get();
 
             return response()->json([
-                'empresa'=>$empresa,
+                'company'=>$company,
                 'user'   =>$user,
             ]);
     }
@@ -31,7 +31,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        return new ClientResource(Empresa::create($request->all()));
+        return new ClientResource(Company::create($request->all()));
 
     }
 
@@ -41,9 +41,9 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Empresa $empresa)
+    public function show(Company $company)
     {
-        return new ClientResource($empresa);
+        return new ClientResource($company);
     }
 
     /**
@@ -53,11 +53,11 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empresa $empresa)
+    public function update(Request $request, Company $company)
     {
-        $empresa->update($request->all());
+        $company->update($request->all());
 
-        return new ClientResource($empresa);
+        return new ClientResource($company);
     }
 
     /**
@@ -66,10 +66,10 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Empresa $empresa)
+    public function destroy(Company $company)
     {
-        $empresa->delete();
+        $company->delete();
 
-        return new ClientResource($empresa);
+        return new ClientResource($company);
     }
 }

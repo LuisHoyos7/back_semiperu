@@ -26,7 +26,9 @@ class ActResource extends JsonResource
             'firms'         => $this->firms,
             'voucher'       => $this->voucher,
             'date'          => $this->data,
-            'created_at'    => $this->created_at->format('Y-m-d H:i:s')
+            'created_at'    => $this->created_at->format('Y-m-d H:i:s'),
+            'order_buy'     => OrderBuyResource::make($this->orderBuy),
+            'sumOrderBuyId'        => $this->sumOrderBuyId($this->order_buy_id),
         ];
     }
 }

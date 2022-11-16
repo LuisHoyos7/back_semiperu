@@ -32,6 +32,30 @@ const routes = [{
             import ( /* webpackChunkName: "index" */ '../components/acts/Index')
     },
     {
+        path: '/vouchers',
+        name: 'Vouchers',
+        component: () =>
+            import ( /* webpackChunkName: "index" */ '../components/vouchers/Index')
+    },
+    {
+        path: '/vouchers-create',
+        name: 'VoucherCreate',
+        component: () =>
+            import ( /* webpackChunkName: "index" */ '../components/vouchers/Create')
+    },
+    {
+        path: '/personal',
+        name: 'Personal',
+        component: () =>
+            import ( /* webpackChunkName: "index" */ '../components/solicitudes/components/PersonalDemo')
+    },
+    {
+        path: '/seat-demo',
+        name: 'Seat',
+        component: () =>
+            import ( /* webpackChunkName: "index" */ '../components/solicitudes/components/SeatDemo')
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: NotFound
