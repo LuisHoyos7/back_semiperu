@@ -1,30 +1,4 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Codespaces
-Marketplace
-Explore
- 
-@lfnetgrit 
-Bilolhussain
-/
-UserVue
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Security
-Insights
-UserVue/src/views/AddEmployee.vue
-@Bilolhussain
-Bilolhussain First commit
-Latest commit 25c891f on Oct 10, 2021
- History
- 1 contributor
-274 lines (231 sloc)  5.25 KB
+
 
 <template>
     <div>
@@ -34,54 +8,67 @@ Latest commit 25c891f on Oct 10, 2021
             <Steps :model="items" :readonly="true" />
         </div>
 
-        <router-view v-slot="{Component}" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete">
-            <keep-alive>
-                <component :is="Component" />
-            </keep-alive>
-        </router-view>
+        <Form v-if="items[0].show" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete"/>
+        <Confirmation v-else-if="items[1].show" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete"/>
+        <Save v-else-if="items[2].show" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete"/>
+
     </div>
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useToast } from 'primevue/usetoast';
+
+
+import  Form from '../solicitudes/steps/Form'
+import  Confirmation from '../solicitudes/steps/Confirmation'
+import  Save from '../solicitudes/steps/Save'
+
 export default {
-    setup() {
-        const router = useRouter();
-        // const toast = useToast();
-        const items = ref([
-            {
-                label: 'Personal',
-                to: "/personal"
-            },
-            {
-                label: 'Seat',
-                to: "/seat",
-            },
-            {
-                label: 'Payment',
-                to: "/payment",
-            }
-            // {
-            //     label: 'Confirmation',
-            //     to: "/confirmation",
-            // }
-        ]);
-        const formObject = ref({});
-        const nextPage = (event) => {
+    components : {
+        Form,
+        Confirmation,
+        Save
+    },
+    data() {
+        return {
+        // const router = useRouter();
+        // // const toast = useToast();
+        // const items = ref([
+
+            items : [
+                {
+                    label: 'Form',
+                    show: true
+                },
+                {
+                    label: 'Confirmation',
+                    show: false
+                },
+                {
+                    label: 'Save',
+                    show: false
+                }
+            ],      
+            
+            formObject : {},
+        }   
+    },
+    methods:{        
+        nextPage(event){
             for (let field in event.formData) {
-                formObject.value[field] = event.formData[field];
+                this.formObject[field] = event.formData[field];
             }
-            router.push(items.value[event.pageIndex + 1].to);
-        };
-        const prevPage = (event) => {
-            router.push(items.value[event.pageIndex - 1].to);
-        };
-        const complete = () => {
-            toast.add({severity:'success', summary:'Order submitted', detail: 'Dear, ' + formObject.value.firstname + ' ' + formObject.value.lastname + ' your order completed.'});
-        };
-        return { items, formObject, nextPage, prevPage, complete }
+            this.items[event.pageIndex].show = false;
+            this.items[event.pageIndex + 1].show = true;
+            // router.push(items.value[event.pageIndex + 1].to);
+        },
+        prevPage (event) {
+            this.items[event.pageIndex].show = false;
+            this.items[event.pageIndex - 1].show = true;
+            // router.push(items.value[event.pageIndex - 1].to);
+        },
+        complete() {
+            toast.add({severity:'success', summary:'Order submitted', detail: 'Dear, ' + this.formObject.firstname + ' ' + this.formObject.lastname + ' your order completed.'});
+        },
     }
 }
 </script>

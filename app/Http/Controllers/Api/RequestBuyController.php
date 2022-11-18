@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\SolicitudCompra;
+use App\Models\RequestBuy;
 use App\Http\Resources\RequestBuyResource;
 
 
@@ -17,7 +17,7 @@ class RequestBuyController extends Controller
      */
     public function index()
     {
-        return RequestBuyResource::collection(SolicitudCompra::paginate(10));
+        return RequestBuyResource::collection(RequestBuy::paginate(10));
     }
 
     /**
@@ -28,7 +28,8 @@ class RequestBuyController extends Controller
      */
     public function store(Request $request)
     {
-        return new RequestBuyResource(SolicitudCompra::create($request->all()));
+        
+        return new RequestBuyResource(RequestBuy::create($request->all()));
     }
 
     /**

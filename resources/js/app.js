@@ -14,6 +14,8 @@ import Dialog from 'primevue/dialog';
 import Steps from 'primevue/steps';
 import Dropdown from 'primevue/dropdown';
 import Card from 'primevue/card';
+import ToastService from 'primevue/toastservice';
+import Toast from "primevue/toast";
 import App from './App.vue';
 import InputNumber from 'primevue/inputnumber';
 import router from './router';
@@ -24,7 +26,9 @@ const app = createApp(App)
 app.use(router)
 app.use(store)
 app.use(PrimeVue)
+app.use(ToastService);
 app.component('DataTable',DataTable)
+app.component('Toast',Toast)
 app.component('Column',Column)
 app.component('Button',Button)
 app.component('InputText',InputText)

@@ -44,16 +44,16 @@ const routes = [{
             import ( /* webpackChunkName: "index" */ '../components/vouchers/Create')
     },
     {
-        path: '/personal',
-        name: 'Personal',
+        path: '/form',
+        name: 'Form',
         component: () =>
-            import ( /* webpackChunkName: "index" */ '../components/solicitudes/components/PersonalDemo')
+            import ( /* webpackChunkName: "index" */ '../components/solicitudes/steps/Form')
     },
     {
-        path: '/seat-demo',
-        name: 'Seat',
+        path: '/confirmation',
+        name: 'Confirmation',
         component: () =>
-            import ( /* webpackChunkName: "index" */ '../components/solicitudes/components/SeatDemo')
+            import ( /* webpackChunkName: "index" */ '../components/solicitudes/steps/Confirmation')
     },
     {
         path: '/:pathMatch(.*)*',
