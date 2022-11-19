@@ -1,4 +1,4 @@
-
+ 
 <template>
     <div class="stepsdemo-content">
         <Card>
@@ -51,7 +51,7 @@
             </template>
             <template v-slot:footer>
                 <div class="grid grid-nogutter justify-content-between" style="margin-top:20px">
-                    <Button label="Anterior" @click="prevPage()" icon="pi pi-angle-left" />
+                    <Button class="btn-sm" label="Anterior" @click="prevPage()" icon="pi pi-angle-left" />
                     <Button style="margin-left:20px;" label="Siguiente" @click="nextPage()" icon="pi pi-angle-right" iconPos="right" />
                 </div>
             </template>

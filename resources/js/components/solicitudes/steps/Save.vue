@@ -55,11 +55,11 @@
                         <div class="col-md-1" style="margin-bottom: 15px">
                             <div class="form-group">
                                 <label></label>
-                                <button @click="addItem" class="btn btn-success">Agregar</button>
+                                <button @click="addItem()" class="btn btn-success" style="color:white">Agregar</button>
                             </div>
                         </div>
                         <hr>
-                        <table class="table table-sm" style="margin-top:30px;">
+                        <table id="table" class="table table-sm" style="margin-top:30px;">
                             <thead>
                                 <th>Glosa</th>
                                 <th>Posición</th>
@@ -69,22 +69,28 @@
                                 <th>Acción</th>
                             </thead>
                             <tbody v-for="(item, index) in items" :key="index">
+                                <tr :id="index">
                                     <td><div class="col-md-3">
-                                        <input style="width:300px;" class="form-control" :value="item.description"/>
+                                        <input @keyup="searchTimeOut(item.position, index)" style="width:300px;" class="form-control" :value="item.description"/>
                                     </div></td>
                                     <td><div class="col-md-2">
-                                        <input style="width:100px;" class="form-control" :value="item.position"/>
+                                        <input readonly @keyup="searchTimeOut(item.position,index)" style="width:100px;" class="form-control" :value="item.position"/>
                                     </div></td>
                                     <td><div class="col-md-2">
-                                        <input style="width:100px;" class="form-control" :value="item.amount"/>
+                                        <input @keyup="searchTimeOut(item.position, index)" style="width:100px;" class="form-control" :value="item.amount"/>
                                     </div></td>
                                     <td style="width:100px;"><div class="col-md-2">
-                                        <input class="form-control" style="width:100px;" :value="item.price"/>
+                                        <input @keyup="searchTimeOut(item.position,index)" class="form-control" style="width:100px;" :value="item.price"/>
                                     </div></td>
                                     <td><div class="col-md-2">
-                                        <input style="width:100px;" class="form-control" :value="item.price * item.amount"/>
+                                        <input readonly  style="width:100px;" class="form-control" :value="item.total"/>
                                     </div></td>
-                                    <td> En construccion</td>
+                                    <td>
+                                        <a @click="deleteItem(index)">
+                                            <i title="Eliminar" style="color:red; margin-top:14px;" class="pi pi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -92,8 +98,8 @@
             </template>
             <template v-slot:footer>
                 <div class="grid grid-nogutter justify-content-between" style="margin-top:20px">
-                    <Button label="Anterior" @click="prevPage()" icon="pi pi-angle-left" />
-                    <Button style="margin-left:20px;" label="Guardar" @click="saveData()" icon="pi pi-angle-right" iconPos="right" />
+                    <Button class="btn-sm" label="Anterior" @click="prevPage()" icon="pi pi-angle-left" />
+                    <Button class="btn-sm btn-success" style="margin-left:20px;" label="Guardar" @click="saveData()" icon="pi pi-angle-right" iconPos="right" />
                 </div>
             </template>
         </Card>
@@ -115,20 +121,57 @@ export default {
             amount : null,
             price : null,
             form : {},
+            data :[],
         }
     },
     methods: {
         addItem(){
-            this.items.push({description : this.description, position : this.position , amount: this.amount, price:this.price, sub_work_id :this.form.sub_obra });
+            this.items.push({description : this.description, position : this.position , amount: this.amount, price:this.price, sub_work_id :this.form.sub_obra, total : this.amount * this.price });
             console.log('items', this.items);
         },
         saveData(){
             axios.post("api/request_buy",  {detail : this.items , company_id : this.form.client, user_id :this.form.user , currency_type_id : 1 , state_type_id : 1 , code : "SC01", name : "Solicitud compra"}).then((res)=>{
                   this.$toast.add({severity:'success', summary: 'Genial', detail:'Se ha guardo el registro con exito!', life: 3000});
             })
-
             this.$router.push('/');
+        },
+        deleteItem(index_id){
+            this.items.splice(index_id, 1);
+            this.$toast.add({severity:'error', summary: 'Genial', detail:'Se ha eliminado el registro con exito!', life: 3000});
+        },
+        searchTimeOut(position, index) {  
+            if (this.timer) {
+                clearTimeout(this.timer);
+                this.timer = null;
+            }
+            this.timer = setTimeout(() => {
+                this.editItem(position, index);
+            }, 800);
+        },
+        editItem(position, index){
+         
+         setTimeout(() => {
+            let table = document.getElementById(index);
+            let fila = table.getElementsByTagName("input")
+       
+            var data = [];
+            for (let i=0; i<=4; i++) {
+	            data.push(fila[i].value);
+            }
 
+            console.log('data',data);
+
+            const updatedItems = this.items.map(p =>
+             p.position === position
+                ? { ...p, description: data[0], position : data[1], amount : data[2], price : data[3], total : data[2] * data[3]  }
+                : p
+            );
+        
+            this.items = updatedItems;
+            console.log('items update', this.items)
+
+            this.$toast.add({severity:'info', summary: 'Genial', detail:'Se ha actualizado el registro con exito!', life: 3000});
+            }, 800);
         },
         nextPage() {
             this.$emit('nextPage', {formData: {class: this.selectedClass.name, vagon: this.selectedVagon.vagon, seat: this.selectedSeat.seat}, pageIndex: 2});
@@ -144,3 +187,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+td{
+    border-style: none !important;
+}
+</style>

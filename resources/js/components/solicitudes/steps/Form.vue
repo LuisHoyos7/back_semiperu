@@ -158,5 +158,7 @@ export default {
 </script>
 
 <style>
-
+.btn-sm{
+    padding: 5px !important;
+}
 </style>
