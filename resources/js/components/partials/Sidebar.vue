@@ -68,8 +68,8 @@
                 </a>
                 <div id="submenu-2" class="submenu submenu-2 collapse" data-bs-parent="#menu-accordion" style="">
                     <ul class="submenu-list list-unstyled">
-                        <li class="submenu-item">
-                            <a class="submenu-link" href="#">Solicitud de Compra</a>
+                        <li class="submenu-item" >
+                            <router-link class="submenu-link" :to="{ name: 'SolicitudCompraValidacion' }">Solicitud de Compra</router-link>
                         </li>
                         <li class="submenu-item">
                             <a class="submenu-link" href="#">Orden de Compra</a>

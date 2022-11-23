@@ -3,15 +3,33 @@
 <template>
     <div>
         <Toast/>
-
-        <div class="card">
-            <Steps :model="items" :readonly="true" />
+        <div class="card" data-v-387c3806="">
+            <div id="pv_id_1" class="p-steps p-component" data-v-387c3806="">
+                <ul role="tablist">
+                    <li class="p-steps-item " role="tab" aria-selected="false" aria-expanded="false">
+                        <span class="p-menuitem-link" role="presentation">
+                        <span class="p-steps-number color" id="form">1</span>
+                        <span class="p-steps-title">Formulario</span>
+                        </span>
+                    </li>
+                    <li class="p-steps-item " role="tab" aria-selected="false" aria-expanded="false">
+                        <span class="p-menuitem-link" role="presentation">
+                        <span class="p-steps-number" id="confirmation">2</span>
+                        <span class="p-steps-title">Confirmación</span>
+                        </span>
+                    </li>
+                    <li class="p-steps-item " role="tab" aria-selected="false" aria-expanded="false">
+                        <span class="p-menuitem-link" role="presentation">
+                            <span class="p-steps-number" id="save">3</span>
+                            <span class="p-steps-title">Guardar Información</span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
         </div>
-
         <Form v-if="items[0].show" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete"/>
         <Confirmation v-else-if="items[1].show" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete"/>
         <Save v-else-if="items[2].show" :formData="formObject" @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete"/>
-
     </div>
 </template>
 
@@ -30,21 +48,17 @@ export default {
     },
     data() {
         return {
-        // const router = useRouter();
-        // // const toast = useToast();
-        // const items = ref([
-
             items : [
                 {
-                    label: 'Form',
+                    label: 'Formulario',
                     show: true
                 },
                 {
-                    label: 'Confirmation',
+                    label: 'Confirmación',
                     show: false
                 },
                 {
-                    label: 'Save',
+                    label: 'Guardar Información',
                     show: false
                 }
             ],      
@@ -54,17 +68,35 @@ export default {
     },
     methods:{        
         nextPage(event){
+           
             for (let field in event.formData) {
                 this.formObject[field] = event.formData[field];
             }
             this.items[event.pageIndex].show = false;
             this.items[event.pageIndex + 1].show = true;
-            // router.push(items.value[event.pageIndex + 1].to);
+
+            if(this.items[1].show){
+                document.getElementById('confirmation').classList.add('active');
+                document.getElementById('form').classList.remove('color');
+            }
+            if(this.items[2].show){
+                document.getElementById('save').classList.add('active');
+                document.getElementById('confirmation').classList.remove('active');
+            }
         },
         prevPage (event) {
             this.items[event.pageIndex].show = false;
             this.items[event.pageIndex - 1].show = true;
-            // router.push(items.value[event.pageIndex - 1].to);
+
+            if(this.items[0].show){
+                document.getElementById('confirmation').classList.remove('active');
+                document.getElementById('form').classList.add('color');
+            }
+            if(this.items[1].show){
+                document.getElementById('confirmation').classList.add('active');
+                document.getElementById('save').classList.remove('active');
+            }
+    
         },
         complete() {
             toast.add({severity:'success', summary:'Order submitted', detail: 'Dear, ' + this.formObject.firstname + ' ' + this.formObject.lastname + ' your order completed.'});
@@ -74,6 +106,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.active{
+background: #35cd3a !important;
+    color:white !important;
+}
+.color{
+    background: #35cd3a !important;
+    color:white !important;
+}
 ::v-deep(b) {
     display: block;
 }
@@ -248,18 +288,3 @@ img.flag {
     color: #C63737;
 }
 </style>
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-UserVue/src at main · Bilolhussain/UserVueUserVue/src/views at main · Bilolhussain/UserVueUserVue/AddEmployee.vue at main · Bilolhussain/UserVue

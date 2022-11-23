@@ -1,6 +1,5 @@
 
 <template>
-    <div class="stepsdemo-content">
         <Toast />
         <Toast position="bottom-center" group="bc">
             <template #message="slotProps">
@@ -21,14 +20,15 @@
                 </div>
             </template>
         </Toast>
-        <Card>
-           <template v-slot:title>
-                Registro de solicitud de compra
-            </template>
-            <template v-slot:content>
-                <div class="p-fluid formgrid grid">
-                     <div class="row">
-                        <div class="col-md-3">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div><h4>Guardar Información</h4></div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Glosa/ Descripción (*):</label>
                                 <input    name="direccion1"  class="form-control" v-model="this.description">
@@ -59,8 +59,8 @@
                             </div>
                         </div>
                         <hr>
-                        <table id="table" class="table table-sm" style="margin-top:30px;">
-                            <thead>
+                        <table class="table" style="margin-top:30px;">
+                            <thead class="table-light">
                                 <th>Glosa</th>
                                 <th>Posición</th>
                                 <th>Cantidad</th>
@@ -95,14 +95,12 @@
                         </table>
                     </div>
                 </div>
-            </template>
-            <template v-slot:footer>
-                <div class="grid grid-nogutter justify-content-between" style="margin-top:20px">
+                <div class="grid grid-nogutter justify-content-between btn btn-sm" style="margin-top:20px; margin-bottom:20px;">
                     <Button class="btn-sm" label="Anterior" @click="prevPage()" icon="pi pi-angle-left" />
-                    <Button class="btn-sm btn-success" style="margin-left:20px;" label="Guardar" @click="saveData()" icon="pi pi-angle-right" iconPos="right" />
+                    <Button class="btn-sm btn-success" style="margin-left:20px;" label="Guardar" @click="saveData()"/>
                 </div>
-            </template>
-        </Card>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -133,7 +131,7 @@ export default {
             axios.post("api/request_buy",  {detail : this.items , company_id : this.form.client, user_id :this.form.user , currency_type_id : 1 , state_type_id : 1 , code : "SC01", name : "Solicitud compra"}).then((res)=>{
                   this.$toast.add({severity:'success', summary: 'Genial', detail:'Se ha guardo el registro con exito!', life: 3000});
             })
-            this.$router.push('/');
+            location.reload();
         },
         deleteItem(index_id){
             this.items.splice(index_id, 1);
@@ -191,5 +189,10 @@ export default {
 <style scoped>
 td{
     border-style: none !important;
+}
+.btn-success{
+    background: #35cd3a!important;
+    border-color: #35cd3a!important;
+    color: white;
 }
 </style>

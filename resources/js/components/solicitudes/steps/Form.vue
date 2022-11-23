@@ -1,15 +1,9 @@
 <template>
-
-    <!-- <div class="row g-3 mb-4 align-items-center justify-content-between">
-        <div class="col-auto">
-            <div>Solicitudes de Compra</div>
-        </div>
-    </div> -->
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12">
-            <div class="card border-success">
+            <div class="card">
                 <div class="card-header d-flex justify-content-between">
-                    <div>Crear solicitud de compra</div>
+                    <div><h4>Crear Requeriemiento</h4></div>
                     <div class="notificacion-type status-badge mb-2">
                         <span class="badge bg-info">Pendiente</span>
                     </div>
@@ -69,9 +63,8 @@
                             </div>
                         </div>
                     </div>
-                        
                     <div class="grid grid-nogutter justify-content-between btn btn-sm" style="margin-top:20px;">
-                        <Button class="btn btn-sm" label="Siguiente" @click="nextPage()" icon="pi pi-angle-right" iconPos="right" />
+                        <Button class="btn btn-info btn-sm" label="Siguiente" @click="nextPage()" icon="pi pi-angle-right" iconPos="right" />
                     </div>
                 </div>
             </div>
@@ -85,7 +78,6 @@ import axios from 'axios';
 export default {
     data(){
         return {
-            step : 1,
             clients  :  [],
             projects :  [],
             subObras :  [],
@@ -108,24 +100,20 @@ export default {
     methods : {
          getProject() {
             var id = this.form.client
-            axios
-                .get(`api/project/${id}`)
+            axios.get(`api/project/${id}`)
                 .then((res) => {
-                     this.projects = res.data;
+                    this.projects = res.data;
                     console.log('projects', res.data)
                 })
         },
-
         getSubObra(){
             var id = this.form.project
-            axios
-                .get(`api/sub_obras/${id}`)
+            axios.get(`api/sub_obras/${id}`)
                 .then((res) => {
                     this.subObras = res.data;
                     console.log('sub_obras', this.projects)
                 })
         },
-
         nextPage() {
             this.submitted = true;
             this.$emit('next-page', {formData: {client: this.form.client, project: this.form.project, sub_obra : this.form.subObra, proveedor: this.form.proveedor, currency : this.form.currency, user : this.form.user}, pageIndex: 0});
@@ -145,20 +133,30 @@ export default {
         }
     },
     mounted(){
-        axios
-            .get("api/client")
+        axios.get("api/client")
             .then((res) => {
                 this.clients = res.data.company
                 this.users = res.data.user
-                console.log('clientes',this.clients);
-                console.log('users',this.users);
         })
     }
 }
 </script>
 
 <style>
-.btn-sm{
-    padding: 5px !important;
+.btn-info{
+    background: #36a3f7!important;
+    border-color: #36a3f7!important;
+}
+.btn-sm {
+    padding-left: 10px !important;
+    padding-right: 12px !important;
+    padding-top: 2px !important;
+    padding-bottom: 5px !important;
+}
+.pi {
+    margin-top:4px !important
+}
+.p-steps{
+    padding:20px; 
 }
 </style>

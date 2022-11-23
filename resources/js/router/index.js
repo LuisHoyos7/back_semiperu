@@ -20,6 +20,12 @@ const routes = [{
             import ( /* webpackChunkName: "index" */ '../components/solicitudes/Compra')
     },
     {
+        path: '/solicitud-compra-validacion',
+        name: 'SolicitudCompraValidacion',
+        component: () =>
+            import ( /* webpackChunkName: "index" */ '../components/solicitudes/validations/Index')
+    },
+    {
         path: '/orders-buy',
         name: 'OrderBuy',
         component: () =>

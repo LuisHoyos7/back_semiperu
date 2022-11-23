@@ -15,18 +15,19 @@ class RequestBuyResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'             => $this->id,
-            'subObra_id'     => $this->subObra_id,
-            'proveedor_id'   => $this->proveedor_id,
-            'encargado_id'   => $this->encargado_id,
-            'tipoMoneda_id'  => $this->tipoMoneda_id,
-            'tipoEstado_id'  => $this->tipoEstado_id,
-            'cod'            => $this->cod,
-            'nombre'         => $this->nombre,
-            'formaPago'      => $this->formaPago,
-            'terminoPago'    => $this->terminoPago,
-            'detalle'        => $this->detalle,
-            'datos'          => $this->datos
+            'id'                    => $this->id,
+            'company_id'            => $this->company_id,
+            'user_id'               => $this->user_id,
+            'currency_type_id'      => $this->currency_type_id,
+            'state_type'            => StateTypeResource::make($this->states),
+            'code'                  => $this->code,
+            'name'                  => $this->name,
+            'payment_method'        => $this->payment_method,
+            'payment_term'          => $this->payment_term,
+            'detail'                => $this->detail,
+            'data'                  => $this->data,
+            'created_at'            => $this->created_at->format('Y-m-d H:i:s'),
+            'year_order'            => $this->created_at->format('Y')
         ];
     }
 }

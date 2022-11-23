@@ -1,13 +1,13 @@
  
 <template>
-    <div class="stepsdemo-content">
-        <Card>
-           <template v-slot:title>
-                Revisa si la información es correcta
-            </template>
-            <template v-slot:content>
-                <div class="p-fluid formgrid grid">
-                     <div class="row">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div><h4>Revisar la Información</h4></div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Cliente:</label>
@@ -48,14 +48,12 @@
                         </div>
                     </div>
                 </div>
-            </template>
-            <template v-slot:footer>
-                <div class="grid grid-nogutter justify-content-between" style="margin-top:20px">
-                    <Button class="btn-sm" label="Anterior" @click="prevPage()" icon="pi pi-angle-left" />
-                    <Button style="margin-left:20px;" label="Siguiente" @click="nextPage()" icon="pi pi-angle-right" iconPos="right" />
+                <div class="grid grid-nogutter justify-content-between btn btn-sm" style="margin-top:20px; margin-bottom:20px;">
+                    <Button class="btn btn-info btn-sm" label="Anterior" @click="prevPage()" icon="pi pi-angle-left" />
+                    <Button class="btn btn-info btn-sm" style="margin-left:20px;" label="Siguiente" @click="nextPage()" icon="pi pi-angle-right" iconPos="right" />
                 </div>
-            </template>
-        </Card>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -67,16 +65,6 @@ export default {
     },
     data () {
         return {
-            selectedClass: '',
-            classes: [
-                {name: 'First Class', code: 'A', factor: 1},
-                {name: 'Second Class', code: 'B', factor: 2},
-                {name: 'Third Class', code: 'C', factor: 3}
-            ],
-            vagons: [],
-            selectedVagon: '',
-            seats: [],
-            selectedSeat: '',
             clients  :  [],
             users :[],
             client_name : null,
@@ -85,7 +73,6 @@ export default {
             proveedor_name : null,
             currency : null,
             user_name : null
-
         }
     },
     methods: {
@@ -97,17 +84,14 @@ export default {
         }
     },
     created(){
-        axios
-            .get("api/client")
+        axios.get("api/client")
             .then((res) => {
                 this.clients = res.data.company
                 this.users = res.data.user
-                console.log('clientes',this.clients);
-                console.log('users',this.users);
 
                 this.clients.forEach(object => {
                     if(object.id ===  this.$props.formData.client){
-                    this.client_name = object.name
+                        this.client_name = object.name
                     }
                     if(object.id ===  this.$props.formData.proveedor){
                         this.proveedor_name = object.name
@@ -119,29 +103,24 @@ export default {
                     this.user_name = object.name
                 })
         })
-        console.log('formData',this.$props.formData.client)
 
-         axios
-                .get(`api/project/${this.$props.formData.project}`)
+        axios.get(`api/project/${this.$props.formData.project}`)
                 .then((res) => {
                      this.projects = res.data;
                      this.projects.forEach(object => {
-                    if(object.id ===  this.$props.formData.project)
-                    this.project_name = object.name
-                });
-                    console.log('projects', res.data)
+                        if(object.id ===  this.$props.formData.project)
+                        this.project_name = object.name
+                    });
                 })
 
-        axios
-                .get(`api/sub_obras/${this.$props.formData.sub_obra}`)
+        axios.get(`api/sub_obras/${this.$props.formData.sub_obra}`)
                 .then((res) => {
                     this.subObras = res.data;
-                     this.subObras.forEach(object => {
-                    if(object.id ===  this.$props.formData.sub_obra)
-                    this.subObra_name = object.name
-                });
-
-            })
+                    this.subObras.forEach(object => {
+                        if(object.id ===  this.$props.formData.sub_obra)
+                            this.subObra_name = object.name
+                        });
+                })
 
         this.currency = this.$props.formData.currency
     }
