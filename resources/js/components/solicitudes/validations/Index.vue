@@ -1,4 +1,5 @@
 <template>
+    <Toast/>
     <div>
       <div class="card" style="margin-rigth:10px">
             <DataTable :value="requestsBuy" :paginator="true"  :rows="5" class="p-datatable-sm"
@@ -76,6 +77,13 @@
                         </a>
                     </template>
                 </Column> 
+                <Column :sortable="true" field="" header="Linea de Tiempo" dataType="boolean" style="min-width:4rem">
+                    <template #body="{data}">
+                        <a @click="showModalTimeLine(data.id)">
+                            <i class="pi pi-sort-alt" ></i>
+                        </a>
+                    </template>
+                </Column>
             </DataTable>
         </div>
         <div class="card">
@@ -94,7 +102,16 @@
                 <div class="row">
                     <div class="col-md-2">
                         <p>P.M</p>
-                        <button class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
+                        <div v-if="this.user.roles[0] === 'Project'">
+                            <Dropdown @change="changeStatus(this.requestBuyFilter[0].id)" v-model="firma" :options="status" placeholder="Seleccione" class="p-column-filter" :showClear="true">
+                                <template #option="slotProps">
+                                    <span :class="'customer-badge status-' + slotProps.option">{{slotProps.option}}</span>
+                                </template>
+                            </Dropdown>
+                        </div>
+                        <div v-else>
+                            <button class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
+                        </div>
                     </div>
                     <div class="col-md-2">
                         <p>G.R</p>
@@ -132,7 +149,31 @@
                         </tfoot>
                     </table>
                 </div>
-            
+        </Dialog>
+
+        <Dialog header="Linea de tiempo de aprobaciones de la solicitud" v-model:visible="displayModalTimeLine" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :position="'top'" :modal="true">
+               <Timeline :value="this.requestBuyFilter[0].history" align="alternate" class="customized-timeline mt-4">
+                    <template #marker="slotProps">
+                        <span class="custom-marker shadow-2" :style="{backgroundColor: slotProps.item.color}">
+                            <!-- <i :class="slotProps.item.icon"></i> -->
+                        </span>
+                    </template>
+                    <template #content="slotProps">
+                        <Card>
+                            <template #title>
+                                {{slotProps.item.action}}
+                            </template>
+                            <template #subtitle>
+                                {{slotProps.item.date}}
+                            </template>
+                            <template #content>
+                                <img  width="200" class="shadow-2" />
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+                                    quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                            </template>
+                        </Card>
+                    </template>
+                </Timeline>
         </Dialog>
         </div>
     </div>
@@ -143,23 +184,37 @@ import {FilterMatchMode,FilterOperator} from 'primevue/api';
 export default {
     data() {
         return {
+            events1: [
+                {status: 'Ordered', date: '15/10/2020 10:30', icon: 'pi pi-shopping-cart', color: '#9C27B0', image: 'game-controller.jpg'},
+                {status: 'Processing', date: '15/10/2020 14:00', icon: 'pi pi-cog', color: '#673AB7'},
+                {status: 'Shipped', date: '15/10/2020 16:15', icon: 'pi pi-shopping-cart', color: '#FF9800'},
+                {status: 'Delivered', date: '16/10/2020 10:00', icon: 'pi pi-check', color: '#607D8B'}
+            ],
+            events2: [
+                "2020", "2021", "2022", "2023"
+            ],
             displayModalRequest: false,
+            displayModalTimeLine : false,
             requestBuyFilter : [],
+            requestsBuy :[],
             totalAmount :0,
+            firma : null,
+            user : {},
+            history : [],
             filters2: {
                 'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
                 'id': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
                 'code': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
                 'created_at': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
                 'state_type.name': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
-                // 'representative': {value: null, matchMode: FilterMatchMode.IN},
-                // 'status': {value: null, matchMode: FilterMatchMode.EQUALS},
-                // 'verified': {value: null, matchMode: FilterMatchMode.EQUALS}
             },
             statuses: [
                 'Activo', 'Inactivo', 'Pendiente', 'Observado', 'Rechazado', 'Liberado', 'Procesado'
             ],
-            requestsBuy :[],
+
+            status: [
+                'Aprobar', 'Rechazar'
+            ],
         }
     },
 
@@ -171,17 +226,47 @@ export default {
                     console.log('id', id);
                     return (item.id === id)
                 })
+               this.items = this.requestBuyFilter[0].history
                this.totalAmount =  this.requestBuyFilter[0].detail.map(item => item.price * item.amount).reduce((prev, curr) => prev + curr, 0);
+        },
+        showModalTimeLine(id){
+            this.requestBuyFilter = this.requestsBuy.filter((item) => {
+                    console.log('id', id);
+                    return (item.id === id)
+                })
+            this.displayModalTimeLine = true;
         },
         getRequestBuy(){
             axios.get(`api/request_buy`).then((res) => {
                 this.requestsBuy = res.data.data;
-                console.log('data',res.data.data)
             })
         },
+        getUser(){
+            axios.get(`api/user`).then((res)=>{
+                this.user = res.data
+                console.log('user',this.user)
+            });
+        },
+        changeStatus(id){
+            this.history.push({
+                    user_id : this.user.id,
+                    role    : this.user.roles[0],
+                    action  : this.firma,
+                    date    : new Date(),
+                    state_type_id : 1
+                });
+
+            if(this.firma){
+                axios.post(`api/request_buy/change_status/${id}`,{history : this.history}).then((res) => {
+                    toast.add({severity:'success', summary:'En hora buena', detail: 'El estado se cambio de forma correcta'});
+                });
+            }
+            console.log('firma', this.firma)
+        }
     },
 
     created(){
+        this.getUser();
         this.getRequestBuy();
     }
 }
@@ -302,4 +387,41 @@ th{
         text-transform: uppercase;
     }
 }
+
+.custom-marker {
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+::v-deep(.p-timeline-event-content),
+::v-deep(.p-timeline-event-opposite) {
+    line-height: 1;
+}
+
+@media screen and (max-width: 960px) {
+    ::v-deep(.customized-timeline) {
+            .p-timeline-event:nth-child(even) {
+                flex-direction: row !important;
+                
+                .p-timeline-event-content {
+                    text-align: left !important;
+                }
+            }
+
+            .p-timeline-event-opposite {
+                flex: 0;
+            }
+
+            .p-card {
+                margin-top: 1rem;
+            }
+        }
+}
 </style>
+

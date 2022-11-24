@@ -19,6 +19,7 @@ class RequestBuy extends Model
         'payment_term',
         'detail',
         'data',
+        'history',
         'created_at' ,
         'updated_at',
     ];
@@ -27,5 +28,5 @@ class RequestBuy extends Model
         return $this->belongsTo(StateType::class, 'state_type_id', 'id');
     }
 
-    protected $casts = ['detail' => 'array','data' => 'array'];
+    protected $casts = ['detail' => 'array','data' => 'array', 'history' => 'array'];
 }

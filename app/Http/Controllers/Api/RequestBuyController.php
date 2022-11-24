@@ -69,4 +69,10 @@ class RequestBuyController extends Controller
 
         return new RequestBuyResource($solicituCompra);
     }
+
+    public function changeStatus(Request $request, RequestBuy $requestBuy){
+        // creamos el registro en el campo history para el timelines
+        $requestBuy->update(['history' => $request->history]);
+
+    }
 }

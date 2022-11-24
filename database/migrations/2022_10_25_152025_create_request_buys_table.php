@@ -24,6 +24,7 @@ class CreateRequestBuysTable extends Migration
             $table->string('payment_method');
             $table->string('payment_term');
             $table->json('detail')->nullable();
+            $table->json('history')->nullable();
             $table->json('data')->nullable();
             $table->timestamps();
         });

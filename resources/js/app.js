@@ -4,7 +4,8 @@ require('./dataTablesb5');
 import { createApp } from 'vue';
 import 'primevue/resources/themes/saga-blue/theme.css';       //theme
 import 'primevue/resources/primevue.min.css';                 //core css
-import 'primeicons/primeicons.css';                           //icons
+import 'primeicons/primeicons.css';      
+import Timeline from 'primevue/timeline';                     //icons
 import PrimeVue from 'primevue/config';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -28,6 +29,7 @@ app.use(store)
 app.use(PrimeVue)
 app.use(ToastService);
 app.component('DataTable',DataTable)
+app.component('Timeline',Timeline)
 app.component('Toast',Toast)
 app.component('Column',Column)
 app.component('Button',Button)
@@ -36,7 +38,6 @@ app.component('Dialog',Dialog)
 app.component('Steps',Steps)
 app.component('Card',Card)
 app.component('InputNumber',InputNumber)
-
 app.component('Dropdown',Dropdown)
 app.mount('#app')
 // require('./portal');
