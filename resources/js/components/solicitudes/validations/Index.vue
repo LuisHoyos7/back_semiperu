@@ -22,16 +22,10 @@
                 <template #empty>
                     No hay solicitudes  de compras por validar.
                 </template>
-                <!-- <template #loading>
-                    Loading customers data. Please wait.
-                </template> -->
                 <Column :sortable="true" field="id" header="N°" style="min-width:4rem">
                     <template #body="{data}">
                         {{data.id}}
                     </template>
-                    <!-- <template #filter="{filterModel,filterCallback}">
-                        <InputText type="text" v-model="filterModel.value" @input="filterCallback()" class="p-column-filter" placeholder="Buscar..."/>
-                    </template> -->
                 </Column> 
                  <Column :sortable="true" header="Monto" filterField="cod" style="min-width:10rem">
                     <template #body="{data}">
@@ -102,28 +96,36 @@
                 <div class="row">
                     <div class="col-md-2">
                         <p>P.M</p>
-                        <div v-if="this.user.roles[0] === 'Project'">
-                            <Dropdown @change="changeStatus(this.requestBuyFilter[0].id)" v-model="firma" :options="status" placeholder="Seleccione" class="p-column-filter" :showClear="true">
-                                <template #option="slotProps">
-                                    <span :class="'customer-badge status-' + slotProps.option">{{slotProps.option}}</span>
-                                </template>
-                            </Dropdown>
+                        <div v-if="this.firmUser.length === 0 && this.user.roles[0] === 'Project' || this.user.roles[0] === 'Project' && this.firmUser[0].action === 'O'">
+                            <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                        </div>
+                        <div v-else>
+                            <button class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-2">
+                        <p>G.R</p>
+                        <div v-if="this.firmUser.length === 1 && this.user.roles[0] === 'Project'">
+                            <button class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
+                        </div>
+                    </div> -->
+                    <div class="col-md-2">
+                        <p>CONTROLLER</p>
+                        <div v-if="this.firmUser.length === 1 && this.user.roles[0] === 'Controller' && this.firmUser[0].action === 'A' || this.user.roles[0] === 'Controller' && this.firmUser[0].action === 'O' || this.firmUser[0].action === 'R'">
+                            <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
                         </div>
                         <div v-else>
                             <button class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <p>G.R</p>
-                        <button class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
-                    </div>
-                    <div class="col-md-2">
-                        <p>CONTROLLER</p>
-                        <button class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
-                    </div>
-                    <div class="col-md-2">
                          <p>G.T</p>
-                        <button class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
+                        <div v-if="this.firmUser.length === 2 && this.user.roles[0] === 'Manager' || this.user.roles[0] === 'Manager' && this.firmUser[0].action === 'O'">
+                            <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                        </div>
+                        <div v-else>
+                            <button class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
+                        </div>
                     </div>
                 </div>
                 <div class="row" style="margin-top:30px;">
@@ -175,6 +177,21 @@
                     </template>
                 </Timeline>
         </Dialog>
+
+        <Dialog header="Firmar Solicitud de Compras" v-model:visible="displayModalFirm" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '30vw'}" :position="'top'" :modal="true">
+            <div class="row">
+                <select class="form-control" v-model="firm" style="margin-bottom:10px">
+                    <option :value="null" disabled hidden>[ SELECCIONE ]</option>
+                    <option value="A">Aprobar</option>
+                    <option value="O">Observar</option>
+                    <option value="R">Rechazar</option>
+                </select>
+                <textarea rows="4" placeholder="Escriba un comentario" class="form-control"  v-model="comment">
+
+                </textarea>
+                <button @click="changeStatus(this.requestBuyFilter[0].id)" style="margin-top:10px" class="btn btn-success">Firmar</button>
+            </div>
+        </Dialog>
         </div>
     </div>
 </template>
@@ -195,11 +212,15 @@ export default {
             ],
             displayModalRequest: false,
             displayModalTimeLine : false,
+            displayModalFirm : false,
             requestBuyFilter : [],
             requestsBuy :[],
             totalAmount :0,
-            firma : null,
+            firms :[],
+            firm : null,
+            Comment: null,
             user : {},
+            firmUser : [],
             history : [],
             filters2: {
                 'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
@@ -223,9 +244,17 @@ export default {
            this.displayModalRequest = true;
             
                 this.requestBuyFilter = this.requestsBuy.filter((item) => {
-                    console.log('id', id);
                     return (item.id === id)
                 })
+                console.log('this.requestBuyFilter',this.requestBuyFilter);
+
+                if(this.requestBuyFilter[0].firms !== null ){
+                    this.firmUser = this.requestBuyFilter[0].firms.filter((item) => {
+                        return (item.user_id === this.user.id)
+                    })
+                }
+                console.log('firmUser',this.firmUser);
+
                this.items = this.requestBuyFilter[0].history
                this.totalAmount =  this.requestBuyFilter[0].detail.map(item => item.price * item.amount).reduce((prev, curr) => prev + curr, 0);
         },
@@ -247,21 +276,43 @@ export default {
                 console.log('user',this.user)
             });
         },
+        showModalFirm(){
+            this.displayModalFirm = true;
+        },
         changeStatus(id){
+
+            this.history = this.requestBuyFilter[0].history;
+                if(this.history  === null ){
+                    this.history = [];
+                }
             this.history.push({
                     user_id : this.user.id,
                     role    : this.user.roles[0],
-                    action  : this.firma,
+                    action  : this.firm,
                     date    : new Date(),
-                    state_type_id : 1
+                    state_type_id : 1 // lo torame como aprobado 
+                });
+            
+            this.firms = this.requestBuyFilter[0].firms;
+                if(this.firms  === null ){
+                    this.firms = [];
+                }
+            this.firms.push({
+                    user_id : this.user.id,
+                    role    : this.user.roles[0],
+                    action  : this.firm,
+                    date    : new Date(),
+                    state_type_id : 1 // lo torame como aprobado 
                 });
 
-            if(this.firma){
-                axios.post(`api/request_buy/change_status/${id}`,{history : this.history}).then((res) => {
-                    toast.add({severity:'success', summary:'En hora buena', detail: 'El estado se cambio de forma correcta'});
+            if(this.firm){
+                axios.post(`api/request_buy/change_status/${id}`,{history : this.history, firms : this.firms}).then((res) => {
+                    this.$toast.add({severity:'success', summary:'En hora buena', detail: 'El estado se cambio de forma correcta'});
                 });
             }
-            console.log('firma', this.firma)
+            this.firm = null
+            this.displayModalFirm = false;
+            this.displayModalRequest = false;
         }
     },
 

@@ -28,7 +28,8 @@ class RequestBuyResource extends JsonResource
             'data'                  => $this->data,
             'created_at'            => $this->created_at->format('Y-m-d H:i:s'),
             'year_order'            => $this->created_at->format('Y'),
-            'history'               => $this->history
+            'history'               => $this->history,
+            'firms'                 => $this->firms
         ];
     }
 }
