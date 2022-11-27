@@ -71,13 +71,20 @@
                         </a>
                     </template>
                 </Column> 
-                <Column :sortable="true" field="" header="Linea de Tiempo" dataType="boolean" style="min-width:4rem">
+                <Column :sortable="true" field="" header="Editar" style="min-width:4rem">
+                    <template #body="{data}">
+                        <a :href="`solicitud-compra/${data.id}`">
+                            <i style="color:blue" class="pi pi-file-edit" ></i>
+                        </a>
+                    </template>
+                </Column>
+                 <!-- <Column :sortable="true" field="" header="Linea de Tiempo" dataType="boolean" style="min-width:4rem">
                     <template #body="{data}">
                         <a @click="showModalTimeLine(data.id)">
                             <i class="pi pi-sort-alt" ></i>
                         </a>
                     </template>
-                </Column>
+                </Column> -->
             </DataTable>
         </div>
         <div class="card">
@@ -95,14 +102,40 @@
                 </div><br><br>
                 <div class="row">
                     <div class="col-md-2">
-                        <p>P.M</p>
-                        <div v-if="this.firmUser.length === 0 && this.user.roles[0] === 'Project' || this.user.roles[0] === 'Project' && this.firmUser[0].action === 'O'">
-                            <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                        <div v-if="this.firmUser.length > 0">
+                            <div v-if="this.firmUser.length === 0 && this.user.roles[0] === 'Project' || this.user.roles[0] === 'Project' && this.firmUser[0].action === 'O' && this.requestBuyFilter[0].state_type.id === 3 ">
+                                <p>P.M</p>
+                                <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                            </div>
+                            <div v-else-if="this.firmUser[0].action === 'O'">
+                                <p>P.M</p>
+                                <button style="color:white" disabled class="btn btn-warning"><i class="pi pi-info"></i></button>
+                            </div>
+                            <div v-else-if="this.firmUser[0].action === 'A'">
+                                <p>P.M</p>
+                                <button disabled class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
+                            </div>
+                            <div v-else-if="this.firmUser[0].action === 'R'">
+                                <p>P.M</p>
+                                <button style="color:white" disabled class="btn btn-danger"><i class="pi pi-times"></i></button>
+                            </div>
+                            <div v-else>
+                                <p>P.M</p>
+                                <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
+                            </div>
                         </div>
                         <div v-else>
-                            <button class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
+                            <div v-if="this.firmUser.length === 0 && this.user.roles[0] === 'Project' || this.user.roles[0] === 'Project' && this.firmUser[0].action === 'O'">
+                                <p>P.M</p>
+                                <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                            </div>
+                            <div v-else>
+                                <p>P.M</p>
+                                <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
+                            </div>
                         </div>
                     </div>
+          
                     <!-- <div class="col-md-2">
                         <p>G.R</p>
                         <div v-if="this.firmUser.length === 1 && this.user.roles[0] === 'Project'">
@@ -110,21 +143,77 @@
                         </div>
                     </div> -->
                     <div class="col-md-2">
-                        <p>CONTROLLER</p>
-                        <div v-if="this.firmUser.length === 1 && this.user.roles[0] === 'Controller' && this.firmUser[0].action === 'A' || this.user.roles[0] === 'Controller' && this.firmUser[0].action === 'O' || this.firmUser[0].action === 'R'">
-                            <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                        
+                        <div v-if="this.firmUser.length > 0 && this.firmUser.length >= 2">
+                            <div v-if="this.firmUser.length === 1 && this.user.roles[0] === 'Controller' && this.firmUser[0].action === 'A' && this.firmUser[1].action !== 'R'  ||  this.user.roles[0] === 'Manager' && this.firmUser[1].action === 'O' && this.requestBuyFilter[0].state_type.id === 3  ">
+                                <p>CONTROLLER</p>
+                                <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                            </div>
+                            <div v-else-if="this.firmUser.length >= 2">
+                                <div v-if="this.firmUser[1].action === 'O'">
+                                    <p>CONTROLLER</p>
+                                    <button style="color:white" disabled class="btn btn-warning"><i class="pi pi-info"></i></button>
+                                </div>
+                                <div v-else-if="this.firmUser[1].action === 'A'">
+                                    <p>CONTROLLER</p>
+                                    <button disabled class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
+                                </div>
+                                <div v-else-if="this.firmUser[1].action === 'R'">
+                                    <p>CONTROLLER</p>
+                                    <button disabled style="color:white" class="btn btn-danger"><i class="pi pi-times"></i></button>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <p>CONTROLLER</p>
+                                <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
+                            </div>
                         </div>
                         <div v-else>
-                            <button class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
+                            <div v-if="this.firmUser.length === 2 && this.user.roles[0] === 'Controller' && this.firmUser[0].action === 'A' ">
+                                <p>CONTROLLER</p>
+                                <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                            </div>
+                            <div v-else>
+                                <p>CONTROLLER</p>
+                                <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-2">
-                         <p>G.T</p>
-                        <div v-if="this.firmUser.length === 2 && this.user.roles[0] === 'Manager' || this.user.roles[0] === 'Manager' && this.firmUser[0].action === 'O'">
-                            <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                        
+                        <div v-if="this.firmUser.length > 0 && this.firmUser.length >= 3">
+                            <div v-if="this.firmUser.length === 2 && this.user.roles[0] === 'Manager'  || this.user.roles[0] === 'Manager' && this.firmUser[2].action === 'O' && this.requestBuyFilter[0].state_type.id === 3 ">
+                                <p>G.T</p>
+                                <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                            </div>
+                            <div v-else-if="this.firmUser.length >= 3">
+                                <div v-if="this.firmUser[2].action === 'O'">
+                                    <p>G.T</p>
+                                    <button  style="color:white" disabled class="btn btn-warning"><i class="pi pi-info"></i></button>
+                                </div>
+                                <div v-else-if="this.firmUser[2].action === 'A'">
+                                    <p>G.T</p>
+                                    <button disabled class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
+                                </div>
+                                <div v-else-if="this.firmUser[2].action === 'R'">
+                                    <p>G.T</p>
+                                    <button style="color:white" disabled class="btn btn-danger"><i class="pi pi-times"></i></button>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <p>G.T</p>
+                                <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
+                            </div>
                         </div>
                         <div v-else>
-                            <button class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
+                            <div v-if="this.firmUser.length === 2 && this.user.roles[0] === 'Manager' && this.firmUser[1].action === 'A'">
+                                <p>G.T</p>
+                                <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                            </div>
+                            <div v-else>
+                                <p>G.T</p>
+                                <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -297,6 +386,21 @@ export default {
                 if(this.firms  === null ){
                     this.firms = [];
                 }
+
+
+            var updatedFirms = []
+           
+            if(this.firms  != null){
+                updatedFirms = this.firms.map(p =>
+                    p.user_id === this.user.id && p.action === 'O'
+                
+                        ? { ...p, user_id: this.user.id, role : this.user.roles[0], action : this.firm, date    : new Date(), state_type_id : 0 ,}
+                        : p
+                
+                    );
+            }
+            console.log('updatedFirms',updatedFirms);
+     
             this.firms.push({
                     user_id : this.user.id,
                     role    : this.user.roles[0],
@@ -306,7 +410,7 @@ export default {
                 });
 
             if(this.firm){
-                axios.post(`api/request_buy/change_status/${id}`,{history : this.history, firms : this.firms}).then((res) => {
+                axios.post(`api/request_buy/change_status/${id}`,{history : this.history, firms : this.firms , firm : this.firm, updatedFirms : updatedFirms}).then((res) => {
                     this.$toast.add({severity:'success', summary:'En hora buena', detail: 'El estado se cambio de forma correcta'});
                 });
             }
