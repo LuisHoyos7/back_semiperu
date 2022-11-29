@@ -73,7 +73,7 @@
                 </Column> 
                 <Column :sortable="true" field="" header="Editar" style="min-width:4rem">
                     <template #body="{data}">
-                        <a :href="`solicitud-compra/${data.id}`">
+                        <a @click="showModalEditCompra(data.id)">
                             <i style="color:blue" class="pi pi-file-edit" ></i>
                         </a>
                     </template>
@@ -169,7 +169,7 @@
                             </div>
                         </div>
                         <div v-else>
-                            <div v-if="this.firmUser.length === 2 && this.user.roles[0] === 'Controller' && this.firmUser[0].action === 'A' ">
+                            <div v-if="this.firmUser.length === 1 && this.user.roles[0] === 'Controller' && this.firmUser[0].action === 'A' ">
                                 <p>CONTROLLER</p>
                                 <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
                             </div>
@@ -216,6 +216,13 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="col-md-2">
+                        <p>Linea de Tiempo</p>
+                        <a @click="showModalTimeLine(this.requestBuyFilter[0].id)">
+                            <i style="color:purple" class="pi pi-sort-alt text-center" ></i>
+                        </a>
+                    </div>
                 </div>
                 <div class="row" style="margin-top:30px;">
                     <table class="table">
@@ -242,26 +249,36 @@
                 </div>
         </Dialog>
 
-        <Dialog header="Linea de tiempo de aprobaciones de la solicitud" v-model:visible="displayModalTimeLine" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}" :position="'top'" :modal="true">
+        <Dialog header="Linea de tiempo de aprobaciones de la solicitud" v-model:visible="displayModalTimeLine" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '40vw'}" :position="'top'" :modal="true">
                <Timeline :value="this.requestBuyFilter[0].history" align="alternate" class="customized-timeline mt-4">
                     <template #marker="slotProps">
                         <span class="custom-marker shadow-2" :style="{backgroundColor: slotProps.item.color}">
-                            <!-- <i :class="slotProps.item.icon"></i> -->
+                            <i :class="slotProps.item.icon"></i>
                         </span>
                     </template>
                     <template #content="slotProps">
                         <Card>
                             <template #title>
-                                {{slotProps.item.action}}
+                                <div v-if="slotProps.item.action === 'A'">
+                                    Aprobado
+                                </div>
+                                <div v-else-if="slotProps.item.action === 'O'">
+                                    Observado
+                                </div>
+                                <div v-else>
+                                    Rechazado
+                                </div>
                             </template>
                             <template #subtitle>
-                                {{slotProps.item.date}}
+                                <p>{{slotProps.item.date}}</p>
+                                <p>Usuario : {{slotProps.item.user_id}}</p>
                             </template>
-                            <template #content>
+                          
+                            <!-- <template #content>
                                 <img  width="200" class="shadow-2" />
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
                                     quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-                            </template>
+                            </template> -->
                         </Card>
                     </template>
                 </Timeline>
@@ -281,13 +298,24 @@
                 <button @click="changeStatus(this.requestBuyFilter[0].id)" style="margin-top:10px" class="btn btn-success">Firmar</button>
             </div>
         </Dialog>
+
+        <Dialog header="Editar solicitud de compra" v-model:visible="displayModalEditCompra" :modal="true">
+            <div class="row">
+                <EditCompra :requestBuyId="requestBuyId"></EditCompra>
+            </div>
+        </Dialog>
         </div>
     </div>
 </template>
 
 <script>
+// import moment from 'moment'
 import {FilterMatchMode,FilterOperator} from 'primevue/api';
+import EditCompra from '../EditCompra.vue'
 export default {
+    components :{
+        EditCompra
+    },
     data() {
         return {
             events1: [
@@ -302,6 +330,8 @@ export default {
             displayModalRequest: false,
             displayModalTimeLine : false,
             displayModalFirm : false,
+            displayModalEditCompra :false,
+            requestBuyId : null,
             requestBuyFilter : [],
             requestsBuy :[],
             totalAmount :0,
@@ -318,6 +348,7 @@ export default {
                 'created_at': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
                 'state_type.name': {value: null, matchMode: FilterMatchMode.STARTS_WITH},
             },
+            
             statuses: [
                 'Activo', 'Inactivo', 'Pendiente', 'Observado', 'Rechazado', 'Liberado', 'Procesado'
             ],
@@ -329,6 +360,10 @@ export default {
     },
 
     methods :{
+        showModalEditCompra(id){
+            this.requestBuyId = id;
+            this.displayModalEditCompra = true;
+        },
         showModalRequest(id){
            this.displayModalRequest = true;
             
@@ -374,7 +409,24 @@ export default {
                 if(this.history  === null ){
                     this.history = [];
                 }
+
+            var color = "";
+            var icon  = "";
+            if(this.firm === 'A'){
+                color = "#198754";
+                icon  = "pi pi-check"
+
+            }else if( this.firm === 'O'){
+                color = "#6c757d";
+                icon  =  "pi pi-info";
+            }else{
+                color = "#dc3545"
+                icon  =  "pi pi-times";
+            }
+
             this.history.push({
+                    icon : icon,
+                    color : color,
                     user_id : this.user.id,
                     role    : this.user.roles[0],
                     action  : this.firm,
@@ -418,6 +470,12 @@ export default {
             this.displayModalFirm = false;
             this.displayModalRequest = false;
         }
+    },
+
+    filters: {
+        dateFilter(value) {
+            return moment(value).format('DD-MM-YYYY')
+        },
     },
 
     created(){

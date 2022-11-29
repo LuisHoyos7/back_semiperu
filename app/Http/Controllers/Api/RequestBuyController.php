@@ -38,9 +38,9 @@ class RequestBuyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SolicitudCompra $solicitudCompra)
+    public function show(RequestBuy $RequestBuy)
     {
-        return new RequestBuyResource($solicitudCompra);
+        return new RequestBuyResource($RequestBuy);
     }
 
     /**
@@ -50,11 +50,11 @@ class RequestBuyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SolicitudCompra $solicituCompra)
+    public function update(Request $request, RequestBuy $RequestBuy)
     {
-        $solicituCompra->update($request->all());
+        $RequestBuy->update($request->all());
 
-        return new RequestBuyResource($solicituCompra);
+        return new RequestBuyResource($RequestBuy);
     }
 
     /**

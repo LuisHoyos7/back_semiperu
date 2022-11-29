@@ -29,5 +29,9 @@ class RequestBuy extends Model
         return $this->belongsTo(StateType::class, 'state_type_id', 'id');
     }
 
+    public function histoies(){
+        return $this->belongsTo(RequestBuyHistory::class);
+    }
+
     protected $casts = ['detail' => 'array','data' => 'array', 'history' => 'array', 'firms' => 'array'];
 }
