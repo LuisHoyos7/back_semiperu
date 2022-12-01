@@ -100,7 +100,7 @@
                             <input :value="this.requestBuyFilter[0].year_order"  type="text" class="form-control sm" readonly/>
                     </div> 
                 </div><br><br>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-2">
                         <div v-if="this.firmUser.length > 0">
                             <div v-if="this.firmUser.length === 0 && this.user.roles[0] === 'Project' || this.user.roles[0] === 'Project' && this.firmUser[0].action === 'O' && this.requestBuyFilter[0].state_type.id === 3 ">
@@ -136,13 +136,13 @@
                         </div>
                     </div>
           
-                    <!-- <div class="col-md-2">
+                    <div class="col-md-2">
                         <p>G.R</p>
                         <div v-if="this.firmUser.length === 1 && this.user.roles[0] === 'Project'">
                             <button class="btn btn-success btn-sm"><i class="pi pi-check"></i></button>
                         </div>
                     </div> -->
-                    <div class="col-md-2">
+                    <!-- <div class="col-md-2">
                         
                         <div v-if="this.firmUser.length > 0 && this.firmUser.length >= 2">
                             <div v-if="this.firmUser.length === 1 && this.user.roles[0] === 'Controller' && this.firmUser[0].action === 'A' && this.firmUser[1].action !== 'R'  ||  this.user.roles[0] === 'Manager' && this.firmUser[1].action === 'O' && this.requestBuyFilter[0].state_type.id === 3  ">
@@ -178,8 +178,9 @@
                                 <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-2">
+                    </div> -->
+                    <!-- <div class="col-md-2">
+                    
                         
                         <div v-if="this.firmUser.length > 0 && this.firmUser.length >= 3">
                             <div v-if="this.firmUser.length === 2 && this.user.roles[0] === 'Manager'  || this.user.roles[0] === 'Manager' && this.firmUser[2].action === 'O' && this.requestBuyFilter[0].state_type.id === 3 ">
@@ -216,7 +217,105 @@
                             </div>
                         </div>
                     </div>
-                    
+                     -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div v-if="this.firmProject.length === 0 && this.user.roles[0] === 'Project'">
+                            <p>P.M</p>
+                            <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                        </div>
+                        <div v-else-if="this.firmProject.length > 0">
+                            <div v-if="this.firmProject[0].action === 'O' && this.user.roles[0] === 'Project'">
+                                <p>P.M</p>
+                                <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                            </div>
+                            <div v-else-if="this.firmProject[0].action === 'A'">
+                                <p>P.M</p>
+                                <button style="color:white" disabled class="btn btn-success"><i class="pi pi-check"></i></button>
+                            </div>
+                            <div v-else-if="this.firmProject[0].action === 'R'">
+                                <p>P.M</p>
+                                <button style="color:white" disabled class="btn btn-danger"><i class="pi pi-times"></i></button>
+                            </div>
+                            <div v-else-if="this.firmProject[0].action === 'O'">
+                                <p>P.M</p>
+                                <button style="color:white" disabled class="btn btn-warning"><i class="pi pi-info"></i></button>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <p>P.M</p>
+                            <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div v-if="this.firmProject.length > 0 ">
+                            <div v-if="this.firmController.length === 0 && this.firmProject[0].action === 'A' && this.user.roles[0] === 'Controller'  || this.firmController.length === 1 && this.firmController[0].action === 'O' && this.user.roles[0] === 'Controller' ">
+                                <p>Controller</p>
+                                <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                            </div>
+                            <div v-else-if="this.firmController.length === 1">
+                          
+                                <div v-if="this.firmController[0].action === 'A'">
+                                     <p>Controller</p>
+                                    <button style="color:white" disabled class="btn btn-success"><i class="pi pi-check"></i></button>
+                                </div>
+                                <div v-else-if="this.firmController[0].action === 'R'">
+                                    
+                                    <p>Controller</p>
+                                    <button style="color:white" disabled class="btn btn-danger"><i class="pi pi-times"></i></button>
+                                </div>
+                                 <div v-else-if="this.firmController[0].action === 'O'">
+                                    <p>Controller</p>
+                                    <button style="color:white" disabled class="btn btn-warning"><i class="pi pi-info"></i></button>
+                                </div>
+                            </div>
+                            <div v-else>
+                                
+                                <p>Controller</p>
+                                <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
+                            </div>
+                        </div>
+                         <div v-else>
+                          
+                                <p>Controller</p>
+                                <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div v-if="this.firmController.length > 0 ">
+                            <div v-if="this.firmGred.length === 0 && this.firmController[0].action === 'A' && this.user.roles[0] === 'Manager'  || this.firmGred.length === 1 && this.firmGred[0].action === 'O' && this.user.roles[0] === 'Manager'">
+                                <p>G.Red</p>
+                                <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                            </div>
+                            <div v-else-if="this.firmGred.length === 1">
+                          
+                                <div v-if="this.firmGred[0].action === 'A'">
+                                     <p>G.Red</p>
+                                    <button style="color:white" disabled class="btn btn-success"><i class="pi pi-check"></i></button>
+                                </div>
+                                <div v-else-if="this.firmGred[0].action === 'R'">
+                                    
+                                    <p>G.Red</p>
+                                    <button style="color:white" disabled class="btn btn-danger"><i class="pi pi-times"></i></button>
+                                </div>
+                                 <div v-else-if="this.firmGred[0].action === 'O'">
+                                    <p>G.Red</p>
+                                    <button style="color:white" disabled class="btn btn-warning"><i class="pi pi-info"></i></button>
+                                </div>
+                            </div>
+                            <div v-else>
+                                
+                                <p>G.Red</p>
+                                <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
+                            </div>
+                        </div>
+                         <div v-else>
+                          
+                                <p>G.Red</p>
+                                <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
+                        </div>
+                    </div>
                     <div class="col-md-2">
                         <p>Linea de Tiempo</p>
                         <a @click="showModalTimeLine(this.requestBuyFilter[0].id)">
@@ -224,7 +323,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="row" style="margin-top:30px;">
+                <div class="row" style="margin-top:40px;">
                     <table class="table">
                         <thead>
                             <th>Posición</th>
@@ -339,7 +438,9 @@ export default {
             firm : null,
             Comment: null,
             user : {},
-            firmUser : [],
+            firmProject : [],
+            firmController :[],
+            firmGred :[],
             history : [],
             filters2: {
                 'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
@@ -373,9 +474,20 @@ export default {
                 console.log('this.requestBuyFilter',this.requestBuyFilter);
 
                 if(this.requestBuyFilter[0].firms !== null ){
-                    this.firmUser = this.requestBuyFilter[0].firms.filter((item) => {
-                        return (item.user_id === this.user.id)
+                    this.firmProject = this.requestBuyFilter[0].firms.filter((item) => {
+                        return (item.role === 'Project')
                     })
+
+                    this.firmController = this.requestBuyFilter[0].firms.filter((item) => {
+                        return (item.role === 'Controller')
+                    })
+
+                     this.firmGred = this.requestBuyFilter[0].firms.filter((item) => {
+                        return (item.role === 'Manager')
+                    })
+
+                    console.log('firmProject',      this.firmProject);
+                    console.log('firmController',   this.firmController);
                 }
                 console.log('firmUser',this.firmUser);
 

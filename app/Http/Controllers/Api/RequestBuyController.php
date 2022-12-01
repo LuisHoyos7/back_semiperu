@@ -94,6 +94,7 @@ class RequestBuyController extends Controller
         
         if($update === 1){
             $requestBuy->update(['firms' => $request->updatedFirms, 'state_type_id' => $state ]);
+            $requestBuy->update(['history' => $request->history]);
         }
         else{
             $requestBuy->update(['history' => $request->history]);
