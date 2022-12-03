@@ -38,10 +38,10 @@
                 <div id="submenu-3" class="submenu submenu-3 collapse" data-bs-parent="#menu-accordion" style="">
                     <ul class="submenu-list list-unstyled">
                         <li class="submenu-item" >
-                            <router-link class="submenu-link" :to="{ name: 'SolicitudCompra' }">Solicitud de Compra</router-link>
+                            <router-link class="submenu-link" :to="{ name: 'SolicitudCompra' }">RQ</router-link>
                         </li>
                         <li class="submenu-item" >
-                            <a class="submenu-link" href="#">Orden de Compra</a>
+                            <router-link class="submenu-link" :to="{ name: 'OrderBuyCreate' }">Orden de Compra</router-link>
                         </li>
                         <li class="submenu-item" >
                             <a class="submenu-link" href="#">Actas de conformidad</a>
@@ -69,7 +69,7 @@
                 <div id="submenu-2" class="submenu submenu-2 collapse" data-bs-parent="#menu-accordion" style="">
                     <ul class="submenu-list list-unstyled">
                         <li class="submenu-item" >
-                            <router-link class="submenu-link" :to="{ name: 'SolicitudCompraValidacion' }">Solicitud de Compra</router-link>
+                            <router-link class="submenu-link" :to="{ name: 'SolicitudCompraValidacion' }">RQ</router-link>
                         </li>
                         <li class="submenu-item">
                             <a class="submenu-link" href="#">Orden de Compra</a>
@@ -102,7 +102,7 @@
                 <div id="submenu-4" class="submenu submenu-4 collapse" data-bs-parent="#menu-accordion" style="">
                     <ul class="submenu-list list-unstyled">
                         <li class="submenu-item">
-                            <a class="submenu-link" >Solicitud de Compra</a>
+                            <a class="submenu-link" >RQ</a>
                         </li>
                         <li class="submenu-item">
                             <router-link class="submenu-link" :to="{name : 'OrderBuy'}">Orden de Compra</router-link>

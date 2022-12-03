@@ -38,6 +38,12 @@ const routes = [{
             import ( /* webpackChunkName: "index" */ '../components/orders_buy/IndexProvider')
     },
     {
+        path: '/orders-buy-create',
+        name: 'OrderBuyCreate',
+        component: () =>
+            import ( /* webpackChunkName: "index" */ '../components/orders_buy/Create')
+    },
+    {
         path: '/acts',
         name: 'Acts',
         component: () =>

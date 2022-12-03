@@ -9,6 +9,14 @@ class OrderBuy extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'detail',
+        'request_buy_id',
+        'state_type_id', 
+        'code', 
+        'name'
+    ];
+
     public function states(){
         return $this->belongsTo(StateType::class, 'state_type_id', 'id');
     }

@@ -27,7 +27,7 @@ class OrderBuyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return new OrderBuyResource(OrderBuy::create($request->all()));
     }
 
     /**
