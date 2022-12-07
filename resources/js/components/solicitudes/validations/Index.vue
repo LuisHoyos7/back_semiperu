@@ -73,7 +73,7 @@
                 </Column> 
                 <Column :sortable="true" field="" header="Editar" style="min-width:4rem">
                     <template #body="{data}">
-                        <a @click="showModalEditCompra(data.id)">
+                        <a v-if="data.state_type.name === 'Pendiente'" @click="showModalEditCompra(data.id)">
                             <i style="color:blue" class="pi pi-file-edit" ></i>
                         </a>
                     </template>
@@ -316,6 +316,40 @@
                                 <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
                         </div>
                     </div>
+                     <div class="col-md-3">
+                        <div v-if="this.firmGred.length > 0 ">
+                            <div v-if="this.firmGtel.length === 0 && this.firmGred[0].action === 'A' && this.user.roles[0] === 'Accountant'  || this.firmGtel.length === 1 && this.firmGtel[0].action === 'O' && this.user.roles[0] === 'Accountant'">
+                                <p>G.Telecomunicaciones</p>
+                                <button class="btn btn-success" @click="showModalFirm()">Firmar</button>
+                            </div>
+                            <div v-else-if="this.firmGtel.length === 1">
+                          
+                                <div v-if="this.firmGtel[0].action === 'A'">
+                                     <p>G.Telecomunicaciones</p>
+                                    <button style="color:white" disabled class="btn btn-success"><i class="pi pi-check"></i></button>
+                                </div>
+                                <div v-else-if="this.firmGtel[0].action === 'R'">
+                                    
+                                    <p>G.Telecomunicaciones</p>
+                                    <button style="color:white" disabled class="btn btn-danger"><i class="pi pi-times"></i></button>
+                                </div>
+                                 <div v-else-if="this.firmGtel[0].action === 'O'">
+                                    <p>G.Telecomunicaciones</p>
+                                    <button style="color:white" disabled class="btn btn-warning"><i class="pi pi-info"></i></button>
+                                </div>
+                            </div>
+                            <div v-else>
+                                
+                                <p>G.Telecomunicaciones</p>
+                                <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
+                            </div>
+                        </div>
+                         <div v-else>
+                          
+                                <p>G.Telecomunicaciones</p>
+                                <button style="color:white" disabled class="btn btn-info"><i class="pi pi-circle-fill"></i></button>
+                        </div>
+                    </div>
                     <div class="col-md-2">
                         <p>Linea de Tiempo</p>
                         <a @click="showModalTimeLine(this.requestBuyFilter[0].id)">
@@ -365,12 +399,12 @@
                                     Observado
                                 </div>
                                 <div v-else>
-                                    Rechazado
+                                    Rechazado 
                                 </div>
                             </template>
                             <template #subtitle>
                                 <p>{{slotProps.item.date}}</p>
-                                <p>Usuario : {{slotProps.item.user_id}}</p>
+                                <p>Usuario : {{slotProps.item.full_name}}</p>
                             </template>
                           
                             <!-- <template #content>
@@ -433,10 +467,10 @@ export default {
             requestBuyId : null,
             requestBuyFilter : [],
             requestsBuy :[],
-            totalAmount :0,
+            totalAmount :0, 
             firms :[],
             firm : null,
-            Comment: null,
+            comment: null,
             user : {},
             firmProject : [],
             firmController :[],
@@ -482,8 +516,12 @@ export default {
                         return (item.role === 'Controller')
                     })
 
-                     this.firmGred = this.requestBuyFilter[0].firms.filter((item) => {
+                    this.firmGred = this.requestBuyFilter[0].firms.filter((item) => {
                         return (item.role === 'Manager')
+                    })
+
+                    this.firmGtel = this.requestBuyFilter[0].firms.filter((item) => {
+                        return (item.role === 'Accountant')
                     })
 
                     console.log('firmProject',      this.firmProject);
@@ -540,6 +578,7 @@ export default {
                     icon : icon,
                     color : color,
                     user_id : this.user.id,
+                    full_name : this.user.name,
                     role    : this.user.roles[0],
                     action  : this.firm,
                     date    : new Date(),

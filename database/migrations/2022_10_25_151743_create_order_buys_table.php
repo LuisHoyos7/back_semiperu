@@ -22,6 +22,7 @@ class CreateOrderBuysTable extends Migration
             $table->json('detail')->nullable();
             $table->json('files')->nullable();
             $table->json('firms')->nullable();
+            $table->json('history')->nullable();
             $table->json('data')->nullable();
             $table->timestamps();
         });

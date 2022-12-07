@@ -14,12 +14,16 @@ class OrderBuy extends Model
         'request_buy_id',
         'state_type_id', 
         'code', 
-        'name'
+        'name',
+        'history',
+        'firms',
+        'files',
+        'data'
     ];
 
     public function states(){
         return $this->belongsTo(StateType::class, 'state_type_id', 'id');
     }
 
-    protected $casts = ['detail' => 'array','files' => 'array','firms' => 'array','data' => 'array'];
+    protected $casts = ['detail' => 'array','files' => 'array','firms' => 'array','data' => 'array', 'history' => 'array'];
 }

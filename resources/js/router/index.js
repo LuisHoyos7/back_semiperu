@@ -44,6 +44,18 @@ const routes = [{
             import ( /* webpackChunkName: "index" */ '../components/orders_buy/Create')
     },
     {
+        path: '/orders-buy-validaton',
+        name: 'OrderBuyValidation',
+        component: () =>
+            import ( /* webpackChunkName: "index" */ '../components/orders_buy/Validations/Index')
+    },
+    {
+        path: '/orders-buy-modal',
+        name: 'OrderBuyModal',
+        component: () =>
+            import ( /* webpackChunkName: "index" */ '../components/orders_buy/ModalDetail')
+    },
+    {
         path: '/acts',
         name: 'Acts',
         component: () =>

@@ -71,8 +71,8 @@
                         <li class="submenu-item" >
                             <router-link class="submenu-link" :to="{ name: 'SolicitudCompraValidacion' }">RQ</router-link>
                         </li>
-                        <li class="submenu-item">
-                            <a class="submenu-link" href="#">Orden de Compra</a>
+                        <li class="submenu-item" >
+                            <router-link class="submenu-link" :to="{ name: 'OrderBuyValidation' }">Orden de Compra</router-link>
                         </li>
                         <li class="submenu-item">
                             <a class="submenu-link" href="#">Actas de conformidad</a>

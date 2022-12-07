@@ -26,7 +26,8 @@ class OrderBuyResource extends JsonResource
             'files'                 => $this->files,
             'data'                  => $this->data,
             'created_at'            => $this->created_at->format('Y-m-d H:i:s'),
-            'year_order'            => $this->created_at->format('Y')
+            'year_order'            => $this->created_at->format('Y'),
+            'history'               => $this->history
         ];
     }
 }

@@ -445,9 +445,9 @@ class DatabaseSeeder extends Seeder
             ['state_type_id'=>1,'description'=>'description 1','price'=>100,'amount'=>1],
             ['state_type_id'=>1,'description'=>'description 2','price'=>200,'amount'=>1]
         ];
-        $model->firms = [
-            ['state_type_id'=>1,'user_id'=>6,'action'=>'A','comment'=>'O.K.','fecha'=>'2022-10-23 12:00:00']
-        ];//action A = APROBADO, O = OBSERVADO, R = RECHAZADO, V = VISTO // EL user_id será del usuario GERENTE DE TELECOMUNICACIONES (Erick)
+        // $model->firms = [
+        //     ['state_type_id'=>1,'user_id'=>6,'action'=>'A','comment'=>'O.K.','fecha'=>'2022-10-23 12:00:00']
+        // ];//action A = APROBADO, O = OBSERVADO, R = RECHAZADO, V = VISTO // EL user_id será del usuario GERENTE DE TELECOMUNICACIONES (Erick)
         $model->files = [
             ['state_type_id'=>1,'src'=>'../documentos/2022/OCTUBRE/orden_compra/906.0520.60409.22/906.0520.60409.22.pdf']
         ];
@@ -461,9 +461,9 @@ class DatabaseSeeder extends Seeder
         $model->detail = [
             ['state_type_id'=>1,'unit_measure_id'=>1,'description'=>'Servicios PEXT_S412772-S412773 || FIBERLUX (Huasao)','price'=>1000,'amount'=>1]
         ];
-        $model->firms = [
-            ['state_type_id'=>1,'user_id'=>6,'action'=>'A','comment'=>'O.K.','fecha'=>'2022-10-23 14:00:00']
-        ];
+        // $model->firms = [
+        //     ['state_type_id'=>1,'user_id'=>6,'action'=>'A','comment'=>'O.K.','fecha'=>'2022-10-23 14:00:00']
+        // ];
         $model->files = [
             ['state_type_id'=>1,'src'=>'../documentos/2022/OCTUBRE/orden_compra/906.0620.60409.22/906.0620.60409.22.pdf']
         ];
