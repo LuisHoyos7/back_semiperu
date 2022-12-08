@@ -80,13 +80,64 @@
                             </table>
                             </div>
                             <div v-if="this.items.length > 0" style="margin-top:20px; margin-bottom:20px;">
-                                <button class="btn btn-success"  @click="saveData()">Guardar</button>
+                                <button class="btn btn-success"  @click="showModalDetailOrder">Generar</button>
                             </div>
                         </div>
                     </div>
                 </div>   
             </div>
        </div>
+       
+       <Dialog header="Datos adicionales orden de compra" v-model:visible="displayModalDetailOrder" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '40vw'}" :position="'top'" :modal="true">
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Solicitud de Compra:</label>
+                        <select  @change="getProject"   class="form-control form-select" v-model="form.request_buy">
+                            <option :value="null" disabled hidden>[ SELECCIONE ]</option>
+                            <option  v-for="item in requestsBuy" :key="item.id" :value="item.id">{{ item.name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for=""> Año OC:</label>
+                    <input v-model="form.year_oc" placeholder="- -" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label for=""> Fecha OC:</label>
+                    <input v-model="form.date_oc" type="date" class="form-control">
+                </div>
+            </div>
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Moneda: </label>
+                        <select class="form-control form-control-sm"  v-model="form.currency">
+                            <option :value="null" disabled hidden>[ SELECCIONE ]</option>
+                            <option value="PEN">PEN</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <label for="">Adjuntar Archivos:</label>
+                    <input type="file" readonly  @change="onFileSelected" name="myfile" class="form-control form-control-sm">
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:30px">
+                <p>Versión requerida (*) PDF 1.4  , en caso de no tener la versión compatible.
+                    Convertir PDF en el siguiente enlace:  http://docupub.com/
+                    Archivos Adjuntos:
+                </p>
+            </div><hr>
+            <div class="row text-center" style="margin-top:20px">
+                <div class="btn-group col-offset-6 col-md-2 text-center">
+                    <button class="btn btn-secondary" style="color:white">Cerrar</button>
+                    <button class="btn btn-info" style="color:white">Guardar</button>
+                </div>
+            </div>
+       </Dialog>
     </div>
 </template>
 
@@ -106,13 +157,14 @@ export default {
     data() {
         return {
             items:[],
+            requestsBuy : [],
             description : null,
             position : null,
             amount : null,
+            displayModalDetailOrder: null,
             price : null,
             form : {},
             data :[],
-            clients  :  [],
             projects :  [],
             subObras :  [],
             users    :  [],
@@ -122,18 +174,31 @@ export default {
             submitted: false,
             validationErrors: {},
             form:{
-                client: null,
-                subObra:null,
-                project:null,
-                proveedor: null,
-                user : null,
+                file : null,
+                year_oc: null,
+                date_oc:null,
+                request_buy:null,
                 currency : null
             },   
             formObject : {},
         }   
     },
     methods:{    
-     
+        
+       async showModalDetailOrder(){
+            this.displayModalDetailOrder = true;
+            const res = await axios.get('api/request_buy')
+            this.requestsBuy = res.data.data
+        },
+
+        onFileSelected(event){
+            const file = event.target.files[0];
+            console.log('formData',file)
+            const formData = new FormData();
+            formData.append("my-file", file);
+            
+        },
+
         addItem(){
             if(this.description === null  || this.price === null || this.amount === null || this.position === null){
                 this.$toast.add({severity:'error', summary: 'Opsss', detail:'Te faltan algunos campos!', life: 3000});

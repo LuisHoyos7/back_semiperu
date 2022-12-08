@@ -71,7 +71,7 @@
                 </Column> 
                 <Column :sortable="true" field="" header="Ver" dataType="boolean" style="min-width:4rem">
                     <template #body="{data}">
-                        <a @click="showModalOrder(data.id)">
+                        <a @click="showModalOrder(data.id)"> 
                             <i class="pi pi-eye" ></i>
                         </a>
                     </template>

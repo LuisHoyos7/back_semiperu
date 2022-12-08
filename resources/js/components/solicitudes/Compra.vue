@@ -217,23 +217,7 @@ export default {
                     this.subObras = res.data;
                     console.log('sub_obras', this.projects)
                 })
-        },
-        validateForm() {
-            if (!this.firstname.trim())
-                this.validationErrors['firstname'] = true;
-            else
-                delete this.validationErrors['firstname'];
-
-            if (!this.lastname.trim())
-                this.validationErrors['lastname'] = true;
-            else
-                delete this.validationErrors['lastname'];
-
-            return !Object.keys(this.validationErrors).length;
-        },    
-        complete() {
-            toast.add({severity:'success', summary:'Order submitted', detail: 'Dear, ' + this.formObject.firstname + ' ' + this.formObject.lastname + ' your order completed.'});
-        },
+        },  
         addItem(){
             if(this.description === null || this.form.subObra === null || this.price === null || this.amount === null || this.position === null){
                 this.$toast.add({severity:'error', summary: 'Opsss', detail:'Te faltan algunos campos!', life: 3000});

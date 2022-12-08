@@ -5,7 +5,8 @@ import { createApp } from 'vue';
 import 'primevue/resources/themes/saga-blue/theme.css';       //theme
 import 'primevue/resources/primevue.min.css';                 //core css
 import 'primeicons/primeicons.css';      
-import Timeline from 'primevue/timeline';                     //icons
+import Timeline from 'primevue/timeline';  
+import FileUpload from 'primevue/fileupload';                   //icons
 import PrimeVue from 'primevue/config';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -29,6 +30,7 @@ app.use(store)
 app.use(PrimeVue)
 app.use(ToastService);
 app.component('DataTable',DataTable)
+app.component('FileUpload',FileUpload)
 app.component('Timeline',Timeline)
 app.component('Toast',Toast)
 app.component('Column',Column)
